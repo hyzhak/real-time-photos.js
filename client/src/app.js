@@ -19,6 +19,9 @@
             },
             '/socket.io/socket.io.js' : {
                 exports: 'io'
+            },
+            'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js':{
+                exports: 'L'
             }
         }
     });

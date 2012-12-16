@@ -8,5 +8,8 @@ define([
         Connection.followTag('love');
     }
 
+    var map = new Map();
+    map.placeAt('images-map');
+
     return Core;
 });
