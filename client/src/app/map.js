@@ -18,10 +18,31 @@ define([
             maxZoom: this.maxZoom
         }).addTo(this.map);
 
+        this.imagesGroup = L.layerGroup().addTo(this.map);
+
         this.map.on('moveend', function(){
             //TODO : store new coordinates
         });
     };
+
+    Map.prototype.placeImage = function(lat, lng, width, height, imageUrl, pageUrl, caption){
+        var imageIcon = L.icon({
+            iconUrl: imageUrl,
+            //shadowUrl: 'leaf-shadow.png',
+
+            iconSize:     [64, 64], // size of the icon
+            //shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [32, 32], // point of the icon which will correspond to marker's location
+            //shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [32, 0] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var marker = L.marker([lat, lng], {icon: imageIcon});
+        this.imagesGroup.addLayer(marker);
+
+        //var popup = marker.bindPopup('<div><a target="_blank" href="' + pageUrl + '"><img src="'+imageUrl+'" width="' + width + '" height="' + height + '"/></a></div>');
+        ///popup.openPopup();
+    }
 
     return Map;
 });
