@@ -3,8 +3,9 @@
  * Copyright (c) 2012, Eugene-Krevenets
  */
 define([
-    'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js' //CDN
-],function (L) {
+    'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js', //CDN
+    'libs/leaflet.markercluster/leaflet.markercluster'
+],function (L, MarkerCluster) {
     var Map = function(){
         this.map = null;
         this.maxZoom = 8;
@@ -18,7 +19,9 @@ define([
             maxZoom: this.maxZoom
         }).addTo(this.map);
 
-        this.imagesGroup = L.layerGroup().addTo(this.map);
+        //this.imagesGroup = L.layerGroup().addTo(this.map);
+        var clusterGroup = new L.MarkerClusterGroup();
+        this.imagesGroup = clusterGroup.addTo(this.map);
 
         this.map.on('moveend', function(){
             //TODO : store new coordinates

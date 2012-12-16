@@ -20,8 +20,13 @@
             '/socket.io/socket.io.js' : {
                 exports: 'io'
             },
+            //CDN:
             'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js':{
                 exports: 'L'
+            },
+            'libs/leaflet.markercluster/leaflet.markercluster':{
+                deps : ['http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js'],
+                exports: 'MarkerCluster'
             }
         }
     });
