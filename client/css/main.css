@@ -1,0 +1,13 @@
+body{
+    background-color: black;
+}
+
+#images-map{
+    background-color: #a9a9a9;
+    width: 100%;
+    height: 400px;
+}
+
+.instaImage{
+    float:left;
+}

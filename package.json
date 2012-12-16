@@ -1,0 +1,13 @@
+{
+    "name" : "image-in-space-and-time-server",
+    "version" : "0.0.1",
+    "author" : "Eugene Krevenets",
+    "dependencies" : {
+        "express" : "*",
+        "socket.io" : "0"
+    },
+    "engines": {
+        "node": "0.8.x",
+        "npm": "1.1.x"
+    }
+}
