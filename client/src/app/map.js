@@ -5,11 +5,12 @@
 define([
     //'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js', //CDN
     'libs/leaflet/leaflet-src', //CDN
-    'libs/leaflet.markercluster/leaflet.markercluster-src'
+    'libs/leaflet.markercluster/leaflet.markercluster-src',
+    'libs/leaflet.heatcanvas/heatcanvas-leaflet'
 ],function (L, MarkerCluster) {
     var Map = function(){
         this.map = null;
-        this.maxZoom = 8;
+        this.maxZoom = 16;
     };
 
     Map.prototype.placeAt = function(domElement){
@@ -27,6 +28,10 @@ define([
 
         this.imagesGroup = clusterGroup.addTo(this.map);
 
+        //switch optional
+        //this.heatMap = new L.TileLayer.HeatCanvas();
+        //this.heatMap.onAdd(this.map);
+
         this.map.on('moveend', function(){
             //TODO : store new coordinates
         });
@@ -36,9 +41,9 @@ define([
         //return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
         var childCount = cluster.getChildCount();
 
-        var imageUrl = cluster.getAllChildMarkers()[0].options.icon.options.iconUrl;
+        var lastImageUrl = cluster.getAllChildMarkers()[childCount - 1].options.icon.options.iconUrl;
 
-        return new L.DivIcon({ html: '<div"><img src="'+imageUrl+'" width="' + 64 + '" height="' + 64 + '"/><span>' + childCount + '</span></div>'
+        return new L.DivIcon({ html: '<div"><img src="'+lastImageUrl+'" width="' + 64 + '" height="' + 64 + '"/><span>' + childCount + '</span></div>'
             , iconSize: new L.Point(64, 64) });
     }
 
@@ -70,6 +75,8 @@ define([
 
         var marker = L.marker([lat, lng], {icon: imageIcon});
         this.imagesGroup.addLayer(marker);
+
+        //this.heatMap.pushData(lat, lng, 1);
 
         //var popup = marker.bindPopup('<div><a target="_blank" href="' + pageUrl + '"><img src="'+imageUrl+'" width="' + width + '" height="' + height + '"/></a></div>');
         ///popup.openPopup();

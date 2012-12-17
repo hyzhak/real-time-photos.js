@@ -30,6 +30,17 @@
                 //deps : ['http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js'],
                 deps : ['libs/leaflet/leaflet-src'],
                 exports: 'MarkerCluster'
+            },
+            'libs/leaflet.heatcanvas/heatcanvas':{
+                exports: 'HeatCanvas'
+            },
+            'libs/leaflet.heatcanvas/heatcanvas-leaflet':{
+                //CDN
+                //deps : ['http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js'],
+                deps : [
+                    'libs/leaflet/leaflet-src',
+                    'libs/leaflet.heatcanvas/heatcanvas'
+                ]
             }
         }
     });

@@ -8,7 +8,7 @@ var self = this;
     var Core = {};
     Core.start = function(){
         console.log('start');
-        Connection.followTag('love');
+        Connection.followTag('love');                  n
     };
 
     var map = new Map();
@@ -58,7 +58,7 @@ var self = this;
         });
         */
 
-        Instagram.requestImageByTag('cold', function(imagesData){
+        Instagram.requestImageByTag('sunrise', function(imagesData){
             for(var index = 0, count = imagesData.length; index < count; index++){
                 var imageData = imagesData[index];
                 if( imageData.location && !isNaN(imageData.location.longitude)){
