@@ -58,7 +58,7 @@ var self = this;
         });
         */
 
-        Instagram.requestImageByTag('sunset', function(imagesData){
+        Instagram.requestImageByTag('cold', function(imagesData){
             for(var index = 0, count = imagesData.length; index < count; index++){
                 var imageData = imagesData[index];
                 if( imageData.location && !isNaN(imageData.location.longitude)){

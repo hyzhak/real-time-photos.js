@@ -21,11 +21,14 @@
                 exports: 'io'
             },
             //CDN:
-            'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js':{
+            //'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js':{
+            'libs/leaflet/leaflet-src':{
                 exports: 'L'
             },
-            'libs/leaflet.markercluster/leaflet.markercluster':{
-                deps : ['http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js'],
+            'libs/leaflet.markercluster/leaflet.markercluster-src':{
+                //CDN
+                //deps : ['http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js'],
+                deps : ['libs/leaflet/leaflet-src'],
                 exports: 'MarkerCluster'
             }
         }

@@ -3,8 +3,9 @@
  * Copyright (c) 2012, Eugene-Krevenets
  */
 define([
-    'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js', //CDN
-    'libs/leaflet.markercluster/leaflet.markercluster'
+    //'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js', //CDN
+    'libs/leaflet/leaflet-src', //CDN
+    'libs/leaflet.markercluster/leaflet.markercluster-src'
 ],function (L, MarkerCluster) {
     var Map = function(){
         this.map = null;
@@ -19,14 +20,41 @@ define([
             maxZoom: this.maxZoom
         }).addTo(this.map);
 
-        //this.imagesGroup = L.layerGroup().addTo(this.map);
-        var clusterGroup = new L.MarkerClusterGroup();
+        var clusterGroup = new L.MarkerClusterGroup({
+            iconCreateFunction:  onCreateCluster,
+            animateAddingMarkers: true
+        });
+
         this.imagesGroup = clusterGroup.addTo(this.map);
 
         this.map.on('moveend', function(){
             //TODO : store new coordinates
         });
     };
+
+    function onCreateCluster(cluster){
+        //return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
+        var childCount = cluster.getChildCount();
+
+        var imageUrl = cluster.getAllChildMarkers()[0].options.icon.options.iconUrl;
+
+        return new L.DivIcon({ html: '<div"><img src="'+imageUrl+'" width="' + 64 + '" height="' + 64 + '"/><span>' + childCount + '</span></div>'
+            , iconSize: new L.Point(64, 64) });
+    }
+
+    function onCreateClusterOrg(cluster) {
+        var childCount = cluster.getChildCount();
+        var c = ' marker-cluster-';
+        if (childCount < 10) {
+            c += 'small';
+        } else if (childCount < 100) {
+            c += 'medium';
+        } else {
+            c += 'large';
+        }
+
+        return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+    }
 
     Map.prototype.placeImage = function(lat, lng, width, height, imageUrl, pageUrl, caption){
         var imageIcon = L.icon({
