@@ -8,7 +8,7 @@ var self = this;
     var Core = {};
     Core.start = function(){
         console.log('start');
-        Connection.followTag('love');                  n
+        Connection.followTag('love');
     };
 
     var map = new Map();
@@ -41,7 +41,7 @@ var self = this;
             imageData.images.thumbnail.height,
             imageData.images.thumbnail.url,
             imageData.link,
-            imageData.caption.text
+            imageData.caption&&imageData.caption.text
             );
     }, 1000);
 

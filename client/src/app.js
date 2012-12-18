@@ -4,7 +4,12 @@
         baseUrl: './src',
         paths: {
             libs : './../libs',
-            app : './app'
+            app : './app',
+            //CDN
+            'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min',
+            //CDN
+            'leaflet' : 'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet'
+            //'leaflet' : 'libs/leaflet/leaflet-src'
         },
         shim: {
             'libs/three' : {
@@ -22,13 +27,13 @@
             },
             //CDN:
             //'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js':{
-            'libs/leaflet/leaflet-src':{
+            'leaflet':{
                 exports: 'L'
             },
             'libs/leaflet.markercluster/leaflet.markercluster-src':{
                 //CDN
                 //deps : ['http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js'],
-                deps : ['libs/leaflet/leaflet-src'],
+                deps : ['leaflet'],
                 exports: 'MarkerCluster'
             },
             'libs/leaflet.heatcanvas/heatcanvas':{
@@ -38,18 +43,42 @@
                 //CDN
                 //deps : ['http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js'],
                 deps : [
-                    'libs/leaflet/leaflet-src',
+                    'leaflet',
                     'libs/leaflet.heatcanvas/heatcanvas'
                 ]
-            }
+            },
+            //CDN:
+            //'http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js':{
+            'libs/angular/angular':{
+                exports: 'angular',
+                deps: [
+                    'jquery'
+                ]
+            },
+
+            'libs/bootstrap/js/bootstrap': ['jquery']
         }
     });
+
+    function tryHoldReady() {
+        if (!tryHoldReady.executed && window.jQuery) {
+            window.jQuery.holdReady(true);
+            tryHoldReady.executed = true;
+        }
+    }
+    tryHoldReady();
+    require.onResourceLoad = tryHoldReady;
 
     // Start application
     requirejs([
         //deps
-        'app/core'
-    ],function(Core){
+        'app/core',
+        'libs/angular/angular',
+        'jquery',
+        'libs/bootstrap/js/bootstrap',
+        'app/navigationCtrl'
+    ],function(Core, angular, jquery){
+        jquery.holdReady(false);
         Core.start();
     });
 })();

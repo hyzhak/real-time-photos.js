@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="app">
 <head>
     <title>Images in space and time</title>
 
@@ -7,10 +7,13 @@
 
     <script data-main="src/app.js" src="libs/require.js"></script>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
    <!--<script src="http://code.createjs.com/easeljs-0.5.0.min.js"></script>-->
+    <!--
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+    -->
 
-    <script src="libs/bootstrap/js/bootstrap.js"></script>
+    <!--<script src="libs/bootstrap/js/bootstrap.js"></script>-->
 
     <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap-responsive.css"/>
@@ -29,13 +32,14 @@
 </head>
 <body>
     <h1>Hello, world!</h1>
-    <div>
+    <div ng-controller="NavigationCtrl">
+        {{value}}
         <ul class="nav nav-pills">
-            <li class="active"><a href="#">Wait</a></li>
-            <li ><a href="#">Pop</a></li>
-            <li ><a href="#">By Tag</a>
-                <!--<input type="text" class="input-small" placeholder="tag"></li>-->
+            <li class="active"><a href="#" ng-click="stop()"><i class="icon-pause"></i>Stop</a></li>
+            <li><a href="#" ng-click="requestPop()">Pop</a></li>
+            <li><a href="#" ng-click="requestByTag()"><i class="icon-filter"></i>By Tag</a></li>
         </ul>
+        <input type="text" class="input-small" placeholder="tag"></li>
     </div>
     <div id="images-map"></div>
     <div>
