@@ -79,6 +79,6 @@
         'app/navigationCtrl'
     ],function(Core, angular, jquery){
         jquery.holdReady(false);
-        Core.start();
+        //Core.start();
     });
 })();

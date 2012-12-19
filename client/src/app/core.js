@@ -6,10 +6,27 @@ define([
 var self = this;
 
     var Core = {};
-    Core.start = function(){
-        console.log('start');
-        Connection.followTag('love');
+    Core.startFollowByTag = function(tag){
+        tag |= 'sunrise';
+        console.log('startFollowByTag', tag);
+        Core.tag = tag||'sunrise';
+        Core.currentHandler = requestImagesByTag;
+        Connection.followTag(tag);
+        Core.currentHandler();
     };
+
+    Core.startFollowPop = function(){
+        Core.currentHandler = requestPopImages;
+        Core.currentHandler();
+    }
+
+    Core.stop = function(){
+        console.log('stop');
+        Core.currentHandler = doNothing;
+    }
+
+    Core.currentHandler = doNothing;
+
 
     var map = new Map();
     map.placeAt('images-map');
@@ -28,7 +45,7 @@ var self = this;
 
     setInterval(function(){
         if(imagesBufferToShow.length <= 0){
-            requestImages();
+            Core.currentHandler();
             return;
         }
 
@@ -45,8 +62,7 @@ var self = this;
             );
     }, 1000);
 
-    function requestImages(){
-        /*
+    function requestPopImages(){
         Instagram.requestPopImages(function(imagesData){
             for(var index = 0, count = imagesData.length; index < count; index++){
                 var imageData = imagesData[index];
@@ -56,9 +72,10 @@ var self = this;
                 }
             }
         });
-        */
+    }
 
-        Instagram.requestImageByTag('sunrise', function(imagesData){
+    function requestImagesByTag(){
+        Instagram.requestImageByTag(Core.tag, function(imagesData){
             for(var index = 0, count = imagesData.length; index < count; index++){
                 var imageData = imagesData[index];
                 if( imageData.location && !isNaN(imageData.location.longitude)){
@@ -68,7 +85,7 @@ var self = this;
         });
     };
 
-    requestImages();
+    function doNothing(){};
 
     return Core;
 });

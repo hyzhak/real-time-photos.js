@@ -1,8 +1,29 @@
 define([
-    'app/appModule'
-],function (appModule) {
+    'app/appModule',
+    'app/core'
+],function (appModule, Core) {
     appModule.controller('NavigationCtrl', function($scope) {
-        console.log('NavigationCtrl');
-        $scope.value = 69;
+
+        $scope.state = 'stop'
+
+        $scope.tag = 'love';
+
+        $scope.isStopActive = function(){
+            return ($scope.state === 'stop')?'active':'';
+        }
+
+        $scope.stop = function(){
+            Core.stop();
+            $scope.state = 'stop';
+        }
+
+        $scope.requestPop = function(){
+            $scope.state = 'request pop';
+        }
+
+        $scope.requestByTag = function(){
+            Core.startFollowByTag($scope.tag);
+            $scope.state = 'request by tag';
+        }
     });
 });

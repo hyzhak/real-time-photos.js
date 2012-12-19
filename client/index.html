@@ -33,13 +33,13 @@
 <body>
     <h1>Hello, world!</h1>
     <div ng-controller="NavigationCtrl">
-        {{value}}
         <ul class="nav nav-pills">
-            <li class="active"><a href="#" ng-click="stop()"><i class="icon-pause"></i>Stop</a></li>
+            <!-- TODO : Bind class="active" on state of NavigationCtrl -->
+            <li class="{{isStopActive()}}"><a href="#" ng-click="stop()"><i class="icon-pause"></i>Stop</a></li>
             <li><a href="#" ng-click="requestPop()">Pop</a></li>
             <li><a href="#" ng-click="requestByTag()"><i class="icon-filter"></i>By Tag</a></li>
         </ul>
-        <input type="text" class="input-small" placeholder="tag"></li>
+        <input type="text" class="input-small" placeholder="tag" value="{{tag}}"></li>
     </div>
     <div id="images-map"></div>
     <div>
