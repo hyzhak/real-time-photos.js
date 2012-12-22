@@ -7,7 +7,7 @@ var self = this;
 
     var Core = {};
     Core.startFollowByTag = function(tag){
-        tag |= 'sunrise';
+        tag = tag||'sunrise';
         console.log('startFollowByTag', tag);
         Core.tag = tag||'sunrise';
         Core.currentHandler = requestImagesByTag;
@@ -25,8 +25,21 @@ var self = this;
         Core.currentHandler = doNothing;
     }
 
-    Core.currentHandler = doNothing;
+    Core.clearAllImages = function(){
+        images = {};
+        imagesBufferToShow = [];
+        map.clearAllImages();
+    }
 
+    Core.setVisibleHeatMap = function(value){
+        map.setVisibleHeatMap(value);
+    }
+
+    Core.setVisibleImages = function(value){
+        map.setVisibleImages(value);
+    }
+
+    Core.currentHandler = doNothing;
 
     var map = new Map();
     map.placeAt('images-map');
@@ -58,9 +71,14 @@ var self = this;
             imageData.images.thumbnail.height,
             imageData.images.thumbnail.url,
             imageData.link,
-            imageData.caption&&imageData.caption.text
-            );
+            imageData.caption&&imageData.caption.text,
+            imageData.id,
+            onImageClick);
     }, 1000);
+
+    function onImageClick(id){
+        console.log('click image', id);
+    };
 
     function requestPopImages(){
         Instagram.requestPopImages(function(imagesData){

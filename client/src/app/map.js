@@ -29,13 +29,41 @@ define([
         this.imagesGroup = clusterGroup.addTo(this.map);
 
         //switch optional
-        //this.heatMap = new L.TileLayer.HeatCanvas();
+        this.heatMap = new L.TileLayer.HeatCanvas();
         //this.heatMap.onAdd(this.map);
 
         this.map.on('moveend', function(){
             //TODO : store new coordinates
         });
     };
+
+    Map.prototype.setVisibleHeatMap = function(value){
+        if(this.heatmapIsVisible == value){
+            return;
+        }
+
+        this.heatmapIsVisible = value;
+
+        if(value){
+            this.heatMap.onAdd(this.map);
+        }else{
+            this.heatMap.onRemove(this.map);
+            this._redraw();
+        }
+    }
+
+    Map.prototype.setVisibleImages = function(value){
+        if(value){
+            //this.imagesGroup.addTo(this.map);
+            this.imagesGroup.setOpacity(1)
+        }else{
+            this.imagesGroup.onRemove(this.map);
+            this.map.removeLayer(this.imagesGroup);
+            this.imagesGroup.redraw();
+//            this.imagesGroup.removeFrom(this.map);
+            //this.imagesGroup.setOpacity(0);
+        }
+    }
 
     function onCreateCluster(cluster){
         //return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
@@ -61,7 +89,13 @@ define([
         return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
     }
 
-    Map.prototype.placeImage = function(lat, lng, width, height, imageUrl, pageUrl, caption){
+    Map.prototype.clearAllImages = function(){
+        this.imagesGroup.clearLayers();
+        this.heatMap.heatmap.clear();
+        this.heatMap.data = [];
+    }
+
+    Map.prototype.placeImage = function(lat, lng, width, height, imageUrl, pageUrl, caption, id, clickHandler){
         var imageIcon = L.icon({
             iconUrl: imageUrl,
             //shadowUrl: 'leaf-shadow.png',
@@ -73,10 +107,21 @@ define([
             popupAnchor:  [32, 0] // point from which the popup should open relative to the iconAnchor
         });
 
-        var marker = L.marker([lat, lng], {icon: imageIcon});
+        var marker = L.marker([lat, lng], {
+            icon: imageIcon,
+            imageId: id
+        });
         this.imagesGroup.addLayer(marker);
 
-        //this.heatMap.pushData(lat, lng, 1);
+        marker.on('click', function(e){
+            clickHandler(e.layer.options.imageId);
+        });
+
+        this.heatMap.pushData(lat, lng, 100);
+        if(this.heatmapIsVisible){
+            //Too slow
+            this.heatMap._redraw();
+        }
 
         //var popup = marker.bindPopup('<div><a target="_blank" href="' + pageUrl + '"><img src="'+imageUrl+'" width="' + width + '" height="' + height + '"/></a></div>');
         ///popup.openPopup();

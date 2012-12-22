@@ -8,7 +8,7 @@
     <script data-main="src/app.js" src="libs/require.js"></script>
 
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
-   <!--<script src="http://code.createjs.com/easeljs-0.5.0.min.js"></script>-->
+    <!--<script src="http://code.createjs.com/easeljs-0.5.0.min.js"></script>-->
     <!--
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
     -->
@@ -18,33 +18,38 @@
     <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap-responsive.css"/>
 
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.css"/>
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.ie.css"/>
     <![endif]-->
 
-    <link rel="stylesheet" href="libs/leaflet.markercluster/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="libs/leaflet.markercluster/MarkerCluster.Default.css"/>
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="libs/leaflet.markercluster/MarkerCluster.Default.ie.css" />
+    <link rel="stylesheet" href="libs/leaflet.markercluster/MarkerCluster.Default.ie.css"/>
     <![endif]-->
 
     <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
 </head>
 <body>
-    <h1>Hello, world!</h1>
-    <div ng-controller="NavigationCtrl">
-        <ul class="nav nav-pills">
-            <!-- TODO : Bind class="active" on state of NavigationCtrl -->
-            <li class="{{isStopActive()}}"><a href="#" ng-click="stop()"><i class="icon-pause"></i>Stop</a></li>
-            <li><a href="#" ng-click="requestPop()">Pop</a></li>
-            <li><a href="#" ng-click="requestByTag()"><i class="icon-filter"></i>By Tag</a></li>
-        </ul>
-        <input type="text" class="input-small" placeholder="tag" value="{{tag}}"></li>
-    </div>
-    <div id="images-map"></div>
-    <div>
-
-    </div>
+<h1>Look!</h1>
+<div ng-controller="NavigationCtrl" class="nav">
+    <form class="form-search">
+        <div class="control-group">
+            <label class="control-label" >Tag:</label>
+            <input type="text" class="input-small" placeholder="tag" ng-model="tag">
+            <button class="btn" type="button" ng-click="togglePlay()"><i class="{{getPlayButtonIcon()}}"></i></button>
+            <button class="btn" type="button" ng-click="playChristmas()"><i class="icon-gift"></i> Christmas</button>
+            <button class="btn" type="button" ng-click="clearAllImages()"><i class="icon-remove-circle"></i> Clear</button>
+            <button class="btn" type="button" ng-click="toggleHeatmap()"><i class="icon-map-marker"></i> Heatmap</button>
+        </div>
+    </form>
+</div>
+<div id="images-map">
+</div>
+<div>
+    <img src="http://distilleryimage6.s3.amazonaws.com/064a54964b0e11e2b12d22000a9e295b_7.jpg" width="612" height="612" class="img-polaroid">
+    <div ng-view></div>
+</div>
 </body>
 <!--
 <script src="/socket.io/socket.io.js"></script>

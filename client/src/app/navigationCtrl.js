@@ -4,26 +4,58 @@ define([
 ],function (appModule, Core) {
     appModule.controller('NavigationCtrl', function($scope) {
 
-        $scope.state = 'stop'
+        var heatMap = false;
+
+        setPlaying(false);
+
+        function setPlaying(value, tag){
+            $scope.playing = value;
+            if(value){
+                $scope.tag = tag||$scope.tag;
+                Core.startFollowByTag($scope.tag);
+            }else{
+                Core.stop();
+            }
+        }
 
         $scope.tag = 'love';
 
+        $scope.getPlayButtonIcon = function(){
+            return $scope.playing?'icon-pause':'icon-play-circle';
+        }
+
         $scope.isStopActive = function(){
-            return ($scope.state === 'stop')?'active':'';
+            return !$scope.playing?'active':'';
+        }
+
+        $scope.isPlayActive = function(){
+            return $scope.playing?'active':'';
         }
 
         $scope.stop = function(){
-            Core.stop();
-            $scope.state = 'stop';
-        }
-
-        $scope.requestPop = function(){
-            $scope.state = 'request pop';
+            setPlaying(true);
         }
 
         $scope.requestByTag = function(){
-            Core.startFollowByTag($scope.tag);
-            $scope.state = 'request by tag';
+            setPlaying(false);
+        }
+
+        $scope.togglePlay = function(){
+            setPlaying(!$scope.playing);
+        }
+
+        $scope.toggleHeatmap = function(){
+            heatMap = !heatMap;
+            Core.setVisibleHeatMap(heatMap);
+            Core.setVisibleImages(!heatMap);
+        }
+
+        $scope.playChristmas = function(){
+            setPlaying(true, 'christmas');
+        }
+
+        $scope.clearAllImages = function(){
+            Core.clearAllImages();
         }
     });
 });
