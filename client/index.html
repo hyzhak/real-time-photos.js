@@ -5,8 +5,6 @@
 
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
 
-    <script data-main="src/app.js" src="libs/require.js"></script>
-
     <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
     <!--<script src="http://code.createjs.com/easeljs-0.5.0.min.js"></script>-->
     <!--
@@ -28,6 +26,7 @@
     <link rel="stylesheet" href="libs/leaflet.markercluster/MarkerCluster.Default.ie.css"/>
     <![endif]-->
 
+    <script data-main="src/app.js" src="libs/requirejs/require.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
 </head>
 <body>
@@ -50,6 +49,19 @@
     <img src="http://distilleryimage6.s3.amazonaws.com/064a54964b0e11e2b12d22000a9e295b_7.jpg" width="612" height="612" class="img-polaroid">
     <div ng-view></div>
 </div>
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37228541-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
 </body>
 <!--
 <script src="/socket.io/socket.io.js"></script>

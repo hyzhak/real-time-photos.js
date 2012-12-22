@@ -11,3 +11,56 @@ body{
 .instaImage{
     float:left;
 }
+
+.image{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-size: 100% 100%;
+}
+
+.imageWithTransition{
+    -webkit-transition: opacity 2s;
+    -moz-transition: opacity 2s;
+    -o-transition: opacity 2s;
+    transition: opacity 2s;
+}
+
+.imgIndicator{
+    bottom: 0;
+    /*display: none;*/
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.imgLoaded{
+
+}
+
+.imageContainer{
+    padding-bottom: 100%;
+    position: relative;
+    display: block;
+}
+
+.spinner{
+    height: 18px;
+    left: 50%;
+    margin-left: -9px;
+    margin-top: -9px;
+    position: absolute;
+    top: 50%;
+    width: 18px;
+}
+
+.spinnerAnimation{
+    -webkit-animation: spin8 0.8s linear infinite;
+    -moz-animation: spin8 0.8s linear infinite;
+    -o-animation: spin8 0.8s linear infinite;
+    animation: spin8 0.8s linear infinite;
+}

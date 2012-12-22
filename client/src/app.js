@@ -8,8 +8,16 @@
             //CDN
             'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min',
             //CDN
-            'leaflet' : 'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet'
+            'leaflet' : 'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet',
             //'leaflet' : 'libs/leaflet/leaflet-src'
+
+
+            //CDN
+            'mustache' : '//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min',
+            //'Mustache' : 'libs/mustache',
+
+            //plugins
+            'text' : '../libs/requirejs/text'
         },
         shim: {
             'libs/three' : {

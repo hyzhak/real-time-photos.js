@@ -6,8 +6,13 @@ define([
     //'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js', //CDN
     'leaflet',
     'libs/leaflet.markercluster/leaflet.markercluster-src',
-    'libs/leaflet.heatcanvas/heatcanvas-leaflet'
-],function (L, MarkerCluster) {
+    'libs/leaflet.heatcanvas/heatcanvas-leaflet',
+
+    'mustache',
+
+    //templates
+    'text!/../partials/imageOnMap.html'
+],function (L, MarkerCluster, HeatCanvas, Mustache, ImageTemplate) {
     var Map = function(){
         this.map = null;
         this.maxZoom = 16;
@@ -69,10 +74,15 @@ define([
         //return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
         var childCount = cluster.getChildCount();
 
-        var lastImageUrl = cluster.getAllChildMarkers()[childCount - 1].options.icon.options.iconUrl;
+        var lastImageUrl = cluster.getAllChildMarkers()[childCount - 1].options.icon.imageUrl;
+        //var lastImageUrl = cluster.getAllChildMarkers()[childCount - 1].options.icon.options.iconUrl;
 
-        return new L.DivIcon({ html: '<div"><img src="'+lastImageUrl+'" width="' + 64 + '" height="' + 64 + '"/><span>' + childCount + '</span></div>'
-            , iconSize: new L.Point(64, 64) });
+        return new L.DivIcon({
+            iconAnchor: new L.Point(32, 32),
+            iconSize: new L.Point(64, 64),
+            className: '',
+            html: '<div"><img src="'+lastImageUrl+'" class="img-polaroid" width="' + 64 + '" height="' + 64 + '"/><span>' + childCount + '</span></div>'
+        });
     }
 
     function onCreateClusterOrg(cluster) {
@@ -96,6 +106,7 @@ define([
     }
 
     Map.prototype.placeImage = function(lat, lng, width, height, imageUrl, pageUrl, caption, id, clickHandler){
+        /*
         var imageIcon = L.icon({
             iconUrl: imageUrl,
             //shadowUrl: 'leaf-shadow.png',
@@ -106,6 +117,24 @@ define([
             //shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [32, 0] // point from which the popup should open relative to the iconAnchor
         });
+        var imageIcon = L.DivIcon({
+            iconSize: new L.Point(64, 64),
+            html: '<img width="64" height="64" src="' + imageUrl + '"/>'
+        });
+        */
+        var imageHTML = Mustache.render(ImageTemplate, {
+            imageUrl:imageUrl
+        });
+        var imageIcon = L.divIcon({
+            iconSize: new L.Point(72, 72),
+            iconAnchor: new L.Point(32, 32),
+            className: '',
+            //html: '<div><img width="64" height="64" class="img-polaroid" src="' + imageUrl + '"/></div>'
+//            html: '<div class="img-polaroid"><div class="imageContainer"><div class="image" style=";background-image:url(' + imageUrl + ')"></div><div class="imgIndicator"><div class="spinner spinnerAnimation">loading</div></div></div></div>'
+            html: imageHTML
+        });
+
+        imageIcon.imageUrl = imageUrl;
 
         var marker = L.marker([lat, lng], {
             icon: imageIcon,
