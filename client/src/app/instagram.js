@@ -7,6 +7,9 @@ define([
 ],function (Config) {
     //@private
     function requestFromInstagram(params, callback, errorHandler) {
+        if(params.indexOf('?')<0){
+            params += '?';
+        }
         var url = 'https://api.instagram.com/v1/' + params + 'client_id=' + Config.INSTAGRAM_CLIENT_ID;
         console.log('requestFromInstagram', url);
         $.ajax(url, {
@@ -39,6 +42,11 @@ define([
 
         requestImageByTag: function (tag, callback){
             var params = 'tags/' + tag + '/media/recent?';
+            requestFromInstagram(params, callback);
+        },
+
+        requestImageById: function(id, callback){
+            var params = 'media/' + id;
             requestFromInstagram(params, callback);
         },
 

@@ -41,6 +41,15 @@ var self = this;
 
     Core.currentHandler = doNothing;
 
+    Core.getImageDataById = function(id, callback, errorHandler){
+        var imageData = images[id];
+        if(imageData){
+            callback(imageData);
+        }else{
+            Instagram.requestImageById(id, callback, errorHandler);
+        }
+    }
+
     var map = new Map();
     map.placeAt('images-map');
 
@@ -77,7 +86,7 @@ var self = this;
     }, 1000);
 
     function onImageClick(id){
-        console.log('click image', id);
+        window.location = '#/image/' + id;
     };
 
     function requestPopImages(){
