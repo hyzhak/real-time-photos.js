@@ -16,6 +16,7 @@ define([
     var Map = function(){
         this.map = null;
         this.maxZoom = 16;
+        this.timeoutForImage = 10*1000;
     };
 
     Map.prototype.placeAt = function(domElement){
@@ -74,7 +75,11 @@ define([
         //return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
         var childCount = cluster.getChildCount();
 
-        var lastImageUrl = cluster.getAllChildMarkers()[childCount - 1].options.icon.imageUrl;
+        var lastMarker = cluster.getAllChildMarkers()[childCount - 1];
+        if(lastMarker.userData == null){
+            console.log('there is something wrong.');
+        }
+        var lastImageUrl = lastMarker.userData.imageUrl;
         //var lastImageUrl = cluster.getAllChildMarkers()[childCount - 1].options.icon.options.iconUrl;
 
         return new L.DivIcon({
@@ -106,44 +111,48 @@ define([
     }
 
     Map.prototype.placeImage = function(lat, lng, width, height, imageUrl, pageUrl, caption, id, clickHandler){
-        /*
-        var imageIcon = L.icon({
-            iconUrl: imageUrl,
-            //shadowUrl: 'leaf-shadow.png',
+        var containerId = 'image-on-map-container-' + id;
+        var imageId = 'image-on-map-' + id;
+        var loaderId = 'loader-on-map-' + id;
 
-            iconSize:     [64, 64], // size of the icon
-            //shadowSize:   [50, 64], // size of the shadow
-            iconAnchor:   [32, 32], // point of the icon which will correspond to marker's location
-            //shadowAnchor: [4, 62],  // the same for the shadow
-            popupAnchor:  [32, 0] // point from which the popup should open relative to the iconAnchor
-        });
-        var imageIcon = L.DivIcon({
-            iconSize: new L.Point(64, 64),
-            html: '<img width="64" height="64" src="' + imageUrl + '"/>'
-        });
-        */
-        var imageHTML = Mustache.render(ImageTemplate, {
-            imageUrl:imageUrl
-        });
+        var userData = {
+            imageUrl: imageUrl,
+            containerId: containerId,
+            imageId: imageId,
+            imageIsVisible: false,
+            loaderId: loaderId,
+            loaderIsVisible: true
+        };
+
+        var image = new window.Image();
+        image.src = imageUrl;
+        image.onload = function(){
+            onLoadImageForMarker.call(this, marker);
+        }.bind(this);
+        image.onerror = function(){
+            onLoadErrorImageForMarker.call(this, marker);
+        }.bind(this);
+
+        var imageHTML = Mustache.render(ImageTemplate, userData);
+
         var imageIcon = L.divIcon({
             iconSize: new L.Point(72, 72),
             iconAnchor: new L.Point(32, 32),
             className: '',
-            //html: '<div><img width="64" height="64" class="img-polaroid" src="' + imageUrl + '"/></div>'
-//            html: '<div class="img-polaroid"><div class="imageContainer"><div class="image" style=";background-image:url(' + imageUrl + ')"></div><div class="imgIndicator"><div class="spinner spinnerAnimation">loading</div></div></div></div>'
             html: imageHTML
         });
-
-        imageIcon.imageUrl = imageUrl;
 
         var marker = L.marker([lat, lng], {
             icon: imageIcon,
             imageId: id
         });
+
+        marker.userData = userData;
+
         this.imagesGroup.addLayer(marker);
 
         marker.on('click', function(e){
-            clickHandler(e.layer.options.imageId);
+            clickHandler(id);
         });
 
         this.heatMap.pushData(lat, lng, 100);
@@ -154,6 +163,51 @@ define([
 
         //var popup = marker.bindPopup('<div><a target="_blank" href="' + pageUrl + '"><img src="'+imageUrl+'" width="' + width + '" height="' + height + '"/></a></div>');
         ///popup.openPopup();
+    }
+
+    function onLoadImageForMarker(marker){
+        var userData = marker.userData;
+        if(userData == null){
+            console.log('something wrong!');
+        }
+        userData.loaderIsVisible = false;
+        userData.imageIsVisible = true;
+
+        var imageHTML = Mustache.render(ImageTemplate, userData);
+
+        var $image = $(document.getElementById(userData.imageId));
+        $image.fadeIn();
+        $(document.getElementById(userData.loaderId)).fadeOut();
+
+        refreshMarker.call(this, marker, imageHTML, marker.userData);
+
+        if(this.timeoutForImage > 0){
+            setTimeout(function(){
+                removeMarker.call(this, marker);
+            }.bind(this), this.timeoutForImage);
+        }
+    }
+
+    function onLoadErrorImageForMarker(marker){
+        removeMarker(marker).bind(this);
+    }
+
+    function refreshMarker(marker, html, userData){
+        var iconOptions = marker.options.icon.options;
+        iconOptions.html = html;
+        //TODO: better has command - just refresh!
+    }
+
+    function removeMarker(marker){
+        var userData = marker.userData;
+        var $marker = $('#'+userData.containerId);
+        if($marker.length){
+            $marker.fadeOut('slow', function(){
+                this.imagesGroup.removeLayer(marker);
+            }.bind(this));
+        }else{
+            this.imagesGroup.removeLayer(marker);
+        }
     }
 
     return Map;

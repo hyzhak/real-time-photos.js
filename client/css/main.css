@@ -30,7 +30,7 @@ body{
 
 .imgIndicator{
     bottom: 0;
-    /*display: none;*/
+    display: none;
     left: 0;
     position: absolute;
     right: 0;
@@ -56,11 +56,4 @@ body{
     position: absolute;
     top: 50%;
     width: 18px;
-}
-
-.spinnerAnimation{
-    -webkit-animation: spin8 0.8s linear infinite;
-    -moz-animation: spin8 0.8s linear infinite;
-    -o-animation: spin8 0.8s linear infinite;
-    animation: spin8 0.8s linear infinite;
 }
