@@ -16,7 +16,7 @@ define([
     var Map = function(){
         this.map = null;
         this.maxZoom = 16;
-        this.timeoutForImage = 10*1000;
+        this.timeoutForImage = 60*1000;
     };
 
     Map.prototype.placeAt = function(domElement){

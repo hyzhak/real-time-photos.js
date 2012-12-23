@@ -1,0 +1,13 @@
+<div class="image-preview container-fluid" ng-click="previewClick()">
+    <div class="span1 img-polaroid" style="width: 306px;height: 306px;">
+        <img src="http://distilleryimage6.s3.amazonaws.com/064a54964b0e11e2b12d22000a9e295b_7.jpg"/>
+    </div>
+    <div class="span2">
+        <h1 ng-model="image.title">Image{{image.title}}</h1>
+        <a href="#/author/{{author}}"><h2>{{author}}</h2></a>
+        <p><a href="#/tag/{{tags}}">{{tags}}</a>, <a href="#">tag2</a></p>
+        <p>In my house...</p>
+        <p><a href="#/more">more...</a></p>
+        <button ng-click="close()"><i class="icon-ok-circle"></i>Close</button>
+    </div>
+</div>

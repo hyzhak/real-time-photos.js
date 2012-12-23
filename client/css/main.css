@@ -57,3 +57,12 @@ body{
     top: 50%;
     width: 18px;
 }
+
+.image-preview{
+    background-color: #F3F3F3;
+    position: absolute;
+    left: 50%;
+    top: 250px;
+    margin-left: -160px;
+    margin-top: -160px;
+}

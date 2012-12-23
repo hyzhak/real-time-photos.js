@@ -3,8 +3,9 @@
  * Copyright (c) 2012, Eugene-Krevenets
  */
 define([
-    'libs/angular/angular'
-],function (angular) {
+    'libs/angular/angular',
+    'app/imagePreviewController'
+],function (angular, ImagePreviewController) {
 
     //TODO : нужно параметром передавть tag в
     var SearchController = function($scope){
@@ -16,6 +17,15 @@ define([
             //$locationProvider.html5Mode(true);
             $routeProvider
                 .when('/', {})
-                .when('/byTag', {controller:SearchController});
+                .when('/byTag', {
+                    controller:SearchController
+                })
+                .when('/image/:imageId', {
+                    controller:ImagePreviewController,
+                    templateUrl:'partials/imagePreview.html'
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
         })
 });
