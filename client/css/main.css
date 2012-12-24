@@ -1,5 +1,6 @@
 body{
     background-color: black;
+    background-image: url("background/subtle_stripes.png");
 }
 
 #images-map{

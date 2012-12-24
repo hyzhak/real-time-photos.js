@@ -54,21 +54,28 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
 </head>
 <body>
+<div ng-view></div>
 <div ng-controller="NavigationCtrl" class="nav">
-    <form class="form-search">
+    <form class="form-inline">
         <div class="control-group">
             <label class="control-label" >Tag:</label>
             <input type="text" class="input-small" placeholder="tag" ng-model="tag">
             <button class="btn" type="button" ng-click="togglePlay()"><i class="{{getPlayButtonIcon()}}"></i></button>
             <button class="btn" type="button" ng-click="playChristmas()"><i class="icon-gift"></i> Christmas</button>
-            <button class="btn" type="button" ng-click="clearAllImages()"><i class="icon-remove-circle"></i> Clear</button>
+            <button class="btn" type="button" ng-click="clearAllImages()"><i class="icon-remove-circle"></i></button>
+            <!--
             <button class="btn" type="button" ng-click="toggleHeatmap()"><i class="icon-map-marker"></i> Heatmap</button>
+            -->
         </div>
     </form>
 </div>
 <div id="images-map">
 </div>
-<div ng-view></div>
+<div>
+    <h1>Look! Image on the map</h1>
+    <button class="btn btn-primary">Share</button>
+    <input/>
+</div>
 </body>
 <!--
 <script src="/socket.io/socket.io.js"></script>
