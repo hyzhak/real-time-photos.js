@@ -3,10 +3,28 @@ body{
     background-image: url("background/subtle_stripes.png");
 }
 
+html, body {width: 100%; height: 100%;}
+
+.footer{
+    position:absolute;
+    bottom: 0px;
+}
+
+.copy-right{
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
 #images-map{
     background-color: #a9a9a9;
-    width: 100%;
-    height: 400px;
+    /*width: 100%;
+    min-height: 70%;*/
+    bottom:84px;
+    top:32px;
+    left:2px;
+    right:2px;
+    position:absolute;
 }
 
 .instaImage{
