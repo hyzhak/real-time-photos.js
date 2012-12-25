@@ -55,25 +55,31 @@
 </head>
 <body>
 <div ng-view></div>
-<div ng-controller="NavigationCtrl" class="nav">
+<div ng-controller="NavigationCtrl">
     <form class="form-inline">
         <div class="control-group">
             <label class="control-label" >Tag:</label>
             <input type="text" class="input-small" placeholder="tag" ng-model="tag">
             <button class="btn" type="button" ng-click="togglePlay()"><i class="{{getPlayButtonIcon()}}"></i></button>
+            <!--
             <button class="btn" type="button" ng-click="playChristmas()"><i class="icon-gift"></i> Christmas</button>
+            -->
             <button class="btn" type="button" ng-click="clearAllImages()"><i class="icon-remove-circle"></i></button>
             <!--
             <button class="btn" type="button" ng-click="toggleHeatmap()"><i class="icon-map-marker"></i> Heatmap</button>
             -->
         </div>
     </form>
+    <div class="play-button">
+        <button ng-show="isStopped()" ng-click="startPlayMainButton()" type="button" class="btn btn-primary btn-large"><i class="icon-play"></i> Start: {{tag}}</button>
+    </div>
 </div>
 <div id="images-map">
 </div>
 <div class="footer">
     <h1>Look! Image on the map</h1>
-    <button class="btn btn-primary">Share</button>
+    <p>type tag, press play, and enjoy the view</p>
+    <button type="button" class="btn btn-primary">Share</button>
     <input/>
 </div>
 <div class="copy-right">

@@ -20,7 +20,7 @@ define([
     };
 
     Map.prototype.placeAt = function(domElement){
-        this.map = L.map(domElement).setView([51.505, -0.09], 13);
+        this.map = L.map(domElement).setView([40.0, 0.0], 2);
 
         this.mapLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',

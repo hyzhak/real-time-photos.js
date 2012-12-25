@@ -18,7 +18,7 @@ define([
             }
         }
 
-        $scope.tag = 'love';
+        $scope.tag = 'Christmas';
 
         $scope.getPlayButtonIcon = function(){
             return $scope.playing?'icon-pause':'icon-play-circle';
@@ -32,6 +32,10 @@ define([
             return $scope.playing?'active':'';
         }
 
+        $scope.isStopped = function(){
+            return !$scope.playing;
+        }
+
         $scope.stop = function(){
             setPlaying(true);
         }
@@ -41,7 +45,18 @@ define([
         }
 
         $scope.togglePlay = function(){
+            if($scope.playing){
+                _gaq.push(['_trackPageview', '/#/stop']);
+            }else{
+                _gaq.push(['_trackPageview', '/#/play/tag/' + $scope.tag]);
+            }
+
             setPlaying(!$scope.playing);
+        }
+
+        $scope.startPlayMainButton = function(){
+            _gaq.push(['_trackPageview', '/#/playMainButton/tag/' + $scope.tag]);
+            setPlaying(true);
         }
 
         $scope.toggleHeatmap = function(){
