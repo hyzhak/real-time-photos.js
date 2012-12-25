@@ -45,6 +45,7 @@ define([
             $scope.close = function(){
                 //TODO: ?? doesn't work on custom execute. Need to lowlevel
                 //$location.path('/');
+                _gaq.push(['_trackPageview', '/#/image/close']);
                 window.location = '/#/';
             }
 
