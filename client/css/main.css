@@ -82,6 +82,16 @@ html, body {width: 100%; height: 100%;}
     position: absolute;
     left: 50%;
     top: 250px;
-    margin-left: -160px;
+    width: 600px;
+    margin-left: -306px;
     margin-top: -160px;
+    z-index: 1;
+}
+
+.image-preview-image{
+    float: left;
+}
+
+.image-preview-description{
+    left: 8px;
 }

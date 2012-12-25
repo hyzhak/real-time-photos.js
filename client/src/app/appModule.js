@@ -20,10 +20,7 @@ define([
                 .when('/byTag', {
                     controller:SearchController
                 })
-                .when('/image/:imageId', {
-                    controller:ImagePreviewController,
-                    templateUrl:'partials/imagePreview.html'
-                })
+                .when('/image/:imageId', ImagePreviewController)
                 .otherwise({
                     redirectTo: '/'
                 });

@@ -15,6 +15,10 @@ var self = this;
         Core.currentHandler();
     };
 
+    Core.isUseTag = function(tag){
+        return Core.tag === tag;
+    };
+
     Core.startFollowPop = function(){
         Core.currentHandler = requestPopImages;
         Core.currentHandler();

@@ -1,14 +1,26 @@
-<div id="image-preview" class="image-preview container-fluid">
-    <div class="span1 img-polaroid" style="width: 306px;height: 306px;">
-        <img width="{{image.width}}" height="{{image.height}}" src="{{image.url}}"/>
+<div id="image-preview" class="image-preview">
+    <div class="image-preview-image img-polaroid" style="width: 306px;height: 306px;">
+        <a target="_blank" href="{{image.linkOutside}}">
+            <img width="{{image.width}}" height="{{image.height}}" src="{{image.url}}"/>
+        </a>
     </div>
-    <div class="span2">
-        <h1>Image{{image.caption}}</h1>
-        <a href="#/author/{{authorId}}"><h2>{{image.authorName}}</h2></a>
+    <div class="image-preview-description">
+        <p>{{image.caption}}</p>
+        <a href="#/author/{{authorId}}"><b>by {{image.authorName}}</b></a>
         <!--<img src="{{image.profilePicture}}" alt="{{image.authorName}}">-->
-        <p><a href="#/tag/{{tags}}">{{image.tags}}</a>, <a href="#">tag2</a></p>
-        <p><a href="#/location/{{image.locationId}}">{{image.locationName}</a></p>
-        <p><a target="_blank" href="{{image.linkOutside}}">more...</a></p>
+        <ul class="nav nav-pills">
+            <li ng-repeat="tag in image.tags" ng-class="checkActive(tag)"><a href="#/tag/{{tag}}">{{tag}}</a></li>
+        </ul>
+        <!--
+        <p>
+            <span>
+                <a href="#/location/{{image.locationId}}">{{image.locationName}}</a>
+            </span>
+            <span>
+                <a target="_blank" href="{{image.linkOutside}}">more...</a>
+            </span>
+        </p>
         <button ng-click="close()"><i class="icon-ok-circle"></i>Close</button>
+        -->
     </div>
 </div>
