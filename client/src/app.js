@@ -68,16 +68,6 @@
         }
     });
 
-    function tryHoldReady() {
-        if (!tryHoldReady.executed && window.jQuery) {
-            window.jQuery.holdReady(true);
-            tryHoldReady.executed = true;
-        }
-    }
-
-    tryHoldReady();
-    require.onResourceLoad = tryHoldReady;
-
     // Start application
     requirejs([
         //deps
@@ -87,7 +77,6 @@
         'libs/bootstrap/js/bootstrap',
         'app/navigationCtrl'
     ],function(Core, angular, jquery){
-        jquery.holdReady(false);
-        //Core.start();
+        angular.bootstrap(document, ['app']);
     });
 })();

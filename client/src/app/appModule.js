@@ -10,6 +10,11 @@ define([
     //TODO : нужно параметром передавть tag в
     var SearchController = function($scope){
         $scope.tag = 'love';
+        $scope.modalWindowUrl = '';
+    }
+
+    var AboutController = function($scope){
+        $scope.modalWindowUrl = 'partials/about.html';
     }
 
     return angular.module('app', [])
@@ -19,6 +24,9 @@ define([
                 .when('/', {})
                 .when('/byTag', {
                     controller:SearchController
+                })
+                .when('/about', {
+                    controller: AboutController
                 })
                 .when('/image/:imageId', ImagePreviewController)
                 .otherwise({

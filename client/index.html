@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en">
 <head>
     <title>Images in space and time</title>
 
@@ -60,6 +60,7 @@
 <div ng-view></div>
 
 <div ng-controller="NavigationCtrl">
+    <div ng-include="modalWindowUrl"></div>
     <form class="form-inline">
         <div class="control-group">
             <label class="control-label" >Tag:</label>
