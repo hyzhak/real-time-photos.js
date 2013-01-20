@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="libs/leaflet.markercluster/MarkerCluster.Default.ie.css"/>
     <![endif]-->
 
+    <!-- Logging User by Google Analytics -->
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-37228541-1']);
@@ -46,6 +47,7 @@
         };
     </script>
 
+    <!-- Logging Errors with qbaka.net -->
     <script type="text/javascript">
         (function(a,c){a.__qbaka_eh=a.onerror;a.__qbaka_reports=[];a.onerror=function(){a.__qbaka_reports.push(arguments);if(a.__qbaka_eh)try{a.__qbaka_eh.apply(a,arguments)}catch(b){}};a.onerror.qbaka=1;a.qbaka={report:function(){},customParams:{},set:function(a,b){qbaka.customParams[a]=b},exec:function(a){try{a()}catch(b){qbaka.reportException(b)}},reportException:function(){}};var b=c.createElement("script"),e=c.getElementsByTagName("script")[0],d=function(){e.parentNode.insertBefore(b,e)};b.id="qbaka";b.type="text/javascript";b.async=!0;b.src="//cdn.qbaka.net/reporting.js";"[object Opera]"==a.opera?c.addEventListener("DOMContentLoaded",d):d();qbaka.key="13d4d8698b3f8ee4699602a321ee3eb8"})(window,document);qbaka.options={autoStacktrace:1,trackEvents:1};
     </script>
@@ -54,7 +56,9 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
 </head>
 <body>
+
 <div ng-view></div>
+
 <div ng-controller="NavigationCtrl">
     <form class="form-inline">
         <div class="control-group">
@@ -72,42 +76,44 @@
         </div>
     </form>
     <div class="play-button">
-        <button ng-show="isStopped()" ng-click="startPlayMainButton()" type="button" class="btn btn-primary btn-large"><i class="icon-play"></i> Start: {{tag}}</button>
+        <button ng-show="isStopped()" ng-click="startPlayMainButton()" type="button" class="btn btn-primary btn-large"><i class="icon-play"></i> Start: <span ng-bind-template="tag">...</span></button>
     </div>
 </div>
-<div id="images-map">
-</div>
+
+<div id="images-map"></div>
+
 <div class="footer">
-    <h1>Look! Image on the map</h1>
-    <!--
-    <button type="button" class="btn btn-primary">Share</button>
-    <input/>
-    -->
-    <iframe src="https://www.facebook.com/plugins/like.php?href=http://imagesonmap.herokuapp.com"
-            scrolling="no" frameborder="0"
-            style="border:none; width:450px; height:40px"></iframe>
+    <h1>Look! Images on the map</h1>
+
+    <div>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=276302012485601";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+        <div class="fb-like" data-href="http://imagesonmap.herokuapp.com" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+
+        <!-- Place this tag where you want the +1 button to render. -->
+        <div class="g-plusone" data-size="medium" data-href="http://imagesonmap.herokuapp.com"></div>
+    </div>
+
+    <!-- Place this tag after the last +1 button tag. -->
+    <script type="text/javascript">
+        (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+    </script>
 </div>
+
 <div class="copy-right">
     <span><a href="http://about.me/hyzhak">(C) Hyzhak & Burenka 2013</a></span>
 </div>
-</body>
-<!--
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    var socket = io.connect('http://localhost:8080/');
-    socket.emit('client event', {
-        command: 'start follow tag',
-        data: {
-            tag:'love'
-        }
-    });
 
-    socket.on('server event', function (event) {
-        console.log(event);
-        if(event.name == 'get image with tag'){
-            //get image info and put on map
-        }
-    });
-</script>
--->
+</body>
 </html>

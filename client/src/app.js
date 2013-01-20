@@ -74,6 +74,7 @@
             tryHoldReady.executed = true;
         }
     }
+
     tryHoldReady();
     require.onResourceLoad = tryHoldReady;
 
