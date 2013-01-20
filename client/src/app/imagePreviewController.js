@@ -40,6 +40,7 @@ define([
             }
         },
         controller  : function($scope, $location, $routeParams, image){
+            console.log('imagePreviewController');
             $scope.image = image;
 
             $scope.close = function(){

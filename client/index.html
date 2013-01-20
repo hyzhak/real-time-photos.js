@@ -60,7 +60,8 @@
 <div ng-view></div>
 
 <div ng-controller="NavigationCtrl">
-    <div ng-include="modalWindowUrl"></div>
+    <div id="modal-window" class="modal hide fade" ng-include="templates.modalWindowUrl"></div>
+    <!--<div id="modal-window" class="modal hide fade" ng-include="templates.modalWindowUrl"></div>-->
     <form class="form-inline">
         <div class="control-group">
             <label class="control-label" >Tag:</label>
@@ -84,8 +85,7 @@
 <div id="images-map"></div>
 
 <div class="footer">
-    <h1>Look! Images on the map</h1>
-
+    <div class="inline"><h1>Look! Images on the map</h1><a href="#/about">About</a></div>
     <div>
         <div id="fb-root"></div>
         <script>(function(d, s, id) {

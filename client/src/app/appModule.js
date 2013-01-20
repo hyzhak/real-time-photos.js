@@ -3,22 +3,19 @@
  * Copyright (c) 2012, Eugene-Krevenets
  */
 define([
-    'libs/angular/angular',
+    'angular',
     'app/imagePreviewController'
 ],function (angular, ImagePreviewController) {
 
     //TODO : нужно параметром передавть tag в
     var SearchController = function($scope){
+        console.log('SearchController');
         $scope.tag = 'love';
         $scope.modalWindowUrl = '';
     }
 
-    var AboutController = function($scope){
-        $scope.modalWindowUrl = 'partials/about.html';
-    }
-
-    return angular.module('app', [])
-        .config(function($routeProvider, $locationProvider){
+    var module = angular.module('app', [])
+        .config(['$routeProvider', function($routeProvider, $locationProvider){
             //$locationProvider.html5Mode(true);
             $routeProvider
                 .when('/', {})
@@ -26,11 +23,22 @@ define([
                     controller:SearchController
                 })
                 .when('/about', {
-                    controller: AboutController
+                    templates: {
+                        modalWindowUrl: 'partials/about.html'
+                    }
                 })
                 .when('/image/:imageId', ImagePreviewController)
                 .otherwise({
                     redirectTo: '/'
                 });
-        })
+        }]);
+
+    module.controller('AboutController', ['$scope', function(){
+        $('#modal-window').modal()
+            .on('hidden', function(e){
+                window.location = '/#/';
+            });
+    }]);
+
+    return module;
 });

@@ -2,7 +2,18 @@ define([
     'app/appModule',
     'app/core'
 ],function (appModule, Core) {
-    appModule.controller('NavigationCtrl', function($scope) {
+    appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', function ($scope, $rootScope, $route)  {
+
+        //event had removed after 1.0.0
+        //$rootScope.$on('$beforeRouteChange', function(scope, newRoute){
+        $rootScope.$on('$routeChangeStart', function(scope, newRoute){
+            console.log('$routeChangeStart');
+            if (!newRoute) return;
+            //Load any required resources here
+            console.log("Do conditional loading here");
+            //Set the state bound do the ng-include src attribute
+            $rootScope.templates = newRoute.$route.templates;
+        });
 
         var heatMap = false;
 
@@ -72,5 +83,5 @@ define([
         $scope.clearAllImages = function(){
             Core.clearAllImages();
         }
-    });
+    }]);
 });

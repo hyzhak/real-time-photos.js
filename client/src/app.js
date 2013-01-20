@@ -11,6 +11,10 @@
             //'leaflet' : 'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet',
             'leaflet' : '../libs/leaflet/leaflet-src',
 
+            //CDN
+            //'angular' : 'http://code.angularjs.org/angular-1.0.0rc7.min',
+            //'angular' : '//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min',
+            'angular' : '../libs/angular/angular',
 
             //CDN
             'mustache' : '//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min',
@@ -55,9 +59,7 @@
                     'libs/leaflet.heatcanvas/heatcanvas'
                 ]
             },
-            //CDN:
-            //'http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js':{
-            'libs/angular/angular':{
+            'angular':{
                 exports: 'angular',
                 deps: [
                     'jquery'
@@ -72,7 +74,7 @@
     requirejs([
         //deps
         'app/core',
-        'libs/angular/angular',
+        'angular',
         'jquery',
         'libs/bootstrap/js/bootstrap',
         'app/navigationCtrl'
