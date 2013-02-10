@@ -25,7 +25,7 @@ var self = this;
     }
 
     Core.isUseTag = function(tag){
-        return Core.tag === tag;
+        return Core.tags.indexOf(tag)>=0;
     };
 
     Core.startFollowPop = function(){
