@@ -9,11 +9,20 @@ var self = this;
     Core.startFollowByTag = function(tag){
         tag = tag||'sunrise';
         console.log('startFollowByTag', tag);
-        Core.tag = tag||'sunrise';
-        Core.currentHandler = requestImagesByTag;
+        Core.tags = [tag||'sunrise'];
+        Core.currentHandler = requestImagesByTags;
         Connection.followTag(tag);
         Core.currentHandler();
     };
+
+    Core.startFollowByTags = function(tags){
+        //TODO follow tags
+        console.log('start follow by tags', tags);
+        Core.tags = tags;
+        Core.currentHandler = requestImagesByTags;
+        Connection.followTag(tag);
+        Core.currentHandler();
+    }
 
     Core.isUseTag = function(tag){
         return Core.tag === tag;
@@ -105,16 +114,21 @@ var self = this;
         });
     }
 
-    function requestImagesByTag(){
-        Instagram.requestImageByTag(Core.tag, function(imagesData){
-            for(var index = 0, count = imagesData.length; index < count; index++){
-                var imageData = imagesData[index];
-                if( imageData.location && !isNaN(imageData.location.longitude)){
-                    pushImage(imageData.id, imageData);
-                }
-            }
-        });
+    function requestImagesByTags(){
+        var tags = Core.tags;
+        for(var index = 0, count = tags.length; index < count; index++){
+            Instagram.requestImageByTag(tags[index], onGetImage);
+        }
     };
+
+    function onGetImage(imagesData){
+        for(var index = 0, count = imagesData.length; index < count; index++){
+            var imageData = imagesData[index];
+            if( imageData.location && !isNaN(imageData.location.longitude)){
+                pushImage(imageData.id, imageData);
+            }
+        }
+    }
 
     function doNothing(){};
 

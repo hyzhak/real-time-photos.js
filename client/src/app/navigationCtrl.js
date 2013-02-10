@@ -9,7 +9,7 @@ define([
         //event had removed after 1.0.0
         //$rootScope.$on('$beforeRouteChange', function(scope, newRoute){
         $rootScope.$on('$routeChangeStart', function(scope, newRoute){
-            console.log('$routeChangeStart');
+            console.log('$routeChangeStart', scope, newRoute);
             if (!newRoute || !newRoute.$route) return;
             //Load any required resources here
             //Set the state bound do the ng-include src attribute
