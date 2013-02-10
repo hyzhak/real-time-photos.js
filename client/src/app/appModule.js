@@ -1,7 +1,3 @@
-/**
- * Project: .
- * Copyright (c) 2012, Eugene-Krevenets
- */
 define([
     'angular',
     'app/imagePreviewController'
@@ -32,13 +28,6 @@ define([
                     redirectTo: '/'
                 });
         }]);
-
-    module.controller('AboutController', ['$scope', function(){
-        $('#modal-window').modal()
-            .on('hidden', function(e){
-                window.location = '/#/';
-            });
-    }]);
 
     return module;
 });

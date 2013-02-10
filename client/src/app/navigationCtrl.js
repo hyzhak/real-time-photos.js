@@ -1,7 +1,8 @@
 define([
     'app/appModule',
-    'app/core'
-],function (appModule, Core) {
+    'app/core',
+    'app/aboutController'
+],function (appModule, Core, AboutController) {
     appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', function ($scope, $rootScope, $route)  {
 
         //event had removed after 1.0.0
