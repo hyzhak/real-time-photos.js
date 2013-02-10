@@ -1,20 +1,64 @@
 define([
     'app/appModule',
     'app/core',
-    'app/aboutController'
-],function (appModule, Core, AboutController) {
+    'app/aboutController',
+    'app/startController'
+],function (appModule, Core, AboutController, StartContoller) {
     appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', function ($scope, $rootScope, $route)  {
 
         //event had removed after 1.0.0
         //$rootScope.$on('$beforeRouteChange', function(scope, newRoute){
         $rootScope.$on('$routeChangeStart', function(scope, newRoute){
             console.log('$routeChangeStart');
-            if (!newRoute) return;
+            if (!newRoute || !newRoute.$route) return;
             //Load any required resources here
-            console.log("Do conditional loading here");
             //Set the state bound do the ng-include src attribute
-            $rootScope.templates = newRoute.$route.templates;
+
+            if(!$rootScope.templates){
+                $rootScope.templates = {};
+            }
+
+            var newTemplates = newRoute.$route.templates;
+            if(!newTemplates){
+                newTemplates = {};
+            }
+            //switch modal;
+            //hide old one,
+            if($rootScope.templates.modalWindowUrl){
+                hideModalWindow(function(){
+                    showModalWindow(newTemplates.modalWindowUrl);
+                });
+            }else{
+                showModalWindow(newTemplates.modalWindowUrl);
+            }
+
+            for(var key in newTemplates){
+                if(key != 'modalWindowUrl'){
+                    $rootScope.templates = newTemplates[key];
+                }
+            }
         });
+
+        function hideModalWindow(handler) {
+            $('#modal-window').modal('hide');
+            $('#modal-window').on('hidden', handler);
+        }
+
+        function showModalWindow(modalWindowUrl) {
+            if(!modalWindowUrl){
+                return;
+            }
+            $rootScope.templates.modalWindowUrl = modalWindowUrl;
+            $('#modal-window').modal('show').on('hidden', function(){
+                $rootScope.templates.modalWindowUrl = null;
+
+                //TODO : if user press outside the modal window we need to run default action:
+                //* for start page it's default tag
+                //  * it shall run images with default tag;
+                //  * or continue if we already execute a process;
+                //* for about button we need just return to continue execute process
+            });
+        }
 
         var heatMap = false;
 

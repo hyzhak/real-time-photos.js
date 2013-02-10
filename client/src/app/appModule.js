@@ -14,8 +14,8 @@ define([
         .config(['$routeProvider', function($routeProvider, $locationProvider){
             //$locationProvider.html5Mode(true);
             $routeProvider
-                .when('/', {})
-                .when('/byTag', {
+                //.when('/', {})
+                .when('/tag/:tagName', {
                     controller:SearchController
                 })
                 .when('/about', {
@@ -23,9 +23,14 @@ define([
                         modalWindowUrl: 'partials/about.html'
                     }
                 })
+                .when('/start', {
+                    templates: {
+                        modalWindowUrl: 'partials/start.html'
+                    }
+                })
                 .when('/image/:imageId', ImagePreviewController)
                 .otherwise({
-                    redirectTo: '/'
+                    redirectTo: '/start'
                 });
         }]);
 
