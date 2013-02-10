@@ -1,16 +1,16 @@
 define([
-    'app/core'
-],function (Core) {
-    var TagController = function($scope, $routeParams){
+    'app/core',
+    'app/workspace'
+],function (Core, Workspace) {
+    var TagController = function($scope, $routeParams, $location){
         console.log('TagController');
         var tags = $routeParams.tags;
-        var tagsArray = tags.split('+');
-        console.log(tagsArray[0]);
-        //$scope.tag = 'love';
 
-        //TODO follow all tags
-        Core.startFollowByTag(tagsArray[0]);
+        var tagsArray = tags.split('+');
+
         Core.startFollowByTags(tagsArray);
+
+        Workspace.defaultUrl = $location.absUrl();
     }
 
     return TagController;

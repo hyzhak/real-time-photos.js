@@ -6,37 +6,55 @@ define([
 var self = this;
 
     var Core = {};
+
+    Core.running = false;
+    Core.pausedHandler = requestPopImages;
+
     Core.startFollowByTag = function(tag){
         tag = tag||'sunrise';
         console.log('startFollowByTag', tag);
         var tags = [tag];
         Core.tags = tags;
-        Core.currentHandler = requestImagesByTags;
         Connection.followTag(tags);
-        Core.currentHandler();
+        runHandler(requestImagesByTags);
     };
 
     Core.startFollowByTags = function(tags){
         //TODO follow tags
         console.log('start follow by tags', tags);
+        if(isUseTags(tags)){
+            return;
+        }
         Core.tags = tags;
-        Core.currentHandler = requestImagesByTags;
         Connection.followTag(tags);
-        Core.currentHandler();
+        runHandler(requestImagesByTags);
     }
 
-    Core.isUseTag = function(tag){
-        return Core.tags.indexOf(tag)>=0;
-    };
-
     Core.startFollowPop = function(){
-        Core.currentHandler = requestPopImages;
-        Core.currentHandler();
+        runHandler(requestPopImages);
     }
 
     Core.stop = function(){
         console.log('stop');
-        Core.currentHandler = doNothing;
+
+        if(!Core.running){
+            return;
+        }
+
+        Core.running = false;
+        Core.pausedHandler = Core.currentHandler;
+
+        runHandler(doNothing);
+    }
+
+    Core.start = function(){
+        if(Core.running){
+            return;
+        }
+
+        Core.running = true;
+
+        runHandler(Core.pausedHandler);
     }
 
     Core.clearAllImages = function(){
@@ -132,6 +150,34 @@ var self = this;
     }
 
     function doNothing(){};
+
+
+    function runHandler(handler){
+        Core.currentHandler = handler;
+        Core.currentHandler();
+    }
+
+    Core.isUseTag = function(tag){
+        if(!Core.tags){
+            return false;
+        }
+
+        return Core.tags.indexOf(tag)>=0;
+    };
+
+    function isUseTags(tags) {
+        if(!Core.tags){
+            return false;
+        }
+
+        for(var index = 0, count = tags.length; index < count; index++){
+            if(Core.tags.indexOf(tags[index])<0){
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     return Core;
 });

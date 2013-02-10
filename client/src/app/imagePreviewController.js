@@ -3,8 +3,9 @@
  * Copyright (c) 2012, Eugene-Krevenets
  */
 define([
-    'app/core'
-],function (Core) {
+    'app/core',
+    'app/workspace'
+],function (Core, Workspace) {
     return {
         templateUrl : 'partials/imagePreview.html',
         resolve     : {
@@ -47,7 +48,7 @@ define([
                 //TODO: ?? doesn't work on custom execute. Need to lowlevel
                 //$location.path('/');
                 _gaq.push(['_trackPageview', '/#/image/close']);
-                window.location = '/#/';
+                window.location = Workspace.defaultUrl;
             }
 
             $('#image-preview').on('mousedown', function(){
