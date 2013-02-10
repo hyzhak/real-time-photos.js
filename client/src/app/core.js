@@ -9,9 +9,10 @@ var self = this;
     Core.startFollowByTag = function(tag){
         tag = tag||'sunrise';
         console.log('startFollowByTag', tag);
-        Core.tags = [tag||'sunrise'];
+        var tags = [tag];
+        Core.tags = tags;
         Core.currentHandler = requestImagesByTags;
-        Connection.followTag(tag);
+        Connection.followTag(tags);
         Core.currentHandler();
     };
 
@@ -20,7 +21,7 @@ var self = this;
         console.log('start follow by tags', tags);
         Core.tags = tags;
         Core.currentHandler = requestImagesByTags;
-        Connection.followTag(tag);
+        Connection.followTag(tags);
         Core.currentHandler();
     }
 

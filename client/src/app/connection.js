@@ -29,7 +29,7 @@ define([
         socket.emit('client event', {
             command: 'start follow tag',
             data: {
-                tag: tagName
+                tags: tagName
             }
         });
     }
