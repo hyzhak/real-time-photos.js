@@ -102,7 +102,7 @@ define([
             }
         }
 
-        return marker;
+        return mostNewMarker;
     }
 
     function onCreateClusterOrg(cluster) {
