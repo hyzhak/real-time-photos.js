@@ -55,28 +55,14 @@
     <script data-main="src/app.js" src="libs/requirejs/require.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js"></script>
 </head>
-<body>
+<body ng-controller="NavigationCtrl">
 
 <div ng-view></div>
 
-<div ng-controller="NavigationCtrl">
+<div>
     <div id="modal-window" class="modal hide fade" ng-include="templates.modalWindowUrl"></div>
     <!--<div id="modal-window" class="modal hide fade" ng-include="templates.modalWindowUrl"></div>-->
-    <form class="form-inline">
-        <div class="control-group">
-            <label class="control-label" >Tag:</label>
-            <input type="text" class="input-small" placeholder="tag" ng-model="tag">
-            <button class="btn" type="button" ng-click="togglePlay()"><i class="{{getPlayButtonIcon()}}"></i></button>
-            <!--
-            <button class="btn" type="button" ng-click="playChristmas()"><i class="icon-gift"></i> Christmas</button>
-            -->
-            <!--<button class="btn" type="button" ng-click="clearAllImages()"><i class="icon-remove-circle"></i></button>-->
-            <span><i>type tag, press play, and enjoy the view</i></span>
-            <!--
-            <button class="btn" type="button" ng-click="toggleHeatmap()"><i class="icon-map-marker"></i> Heatmap</button>
-            -->
-        </div>
-    </form>
+
     <!--
     <div class="play-button">
         <button ng-show="isStopped()" ng-click="startPlayMainButton()" type="button" class="btn btn-primary btn-large"><i class="icon-play"></i> Start: <span ng-bind-template="tag">...</span></button>
@@ -87,7 +73,7 @@
 <div id="images-map"></div>
 
 <div class="footer">
-    <div class="inline"><h1>Look! Images on the map! <small><a href="#/about">About</a></small></h1></div>
+    <div class="inline"><div class="play-button-container"><button class="btn btn-large" type="button" ng-click="togglePlay()"><i class="{{getPlayButtonIcon()}}"></i></button></div><h1>Look! Images on the map! <small><a href="#/about">About</a></small></h1></div>
     <div>
         <div id="fb-root"></div>
         <script>(function(d, s, id) {

@@ -7,6 +7,8 @@ var self = this;
 
     var Core = {};
 
+    var cache = [];
+
     Core.running = false;
     Core.pausedHandler = requestPopImages;
 
@@ -15,6 +17,7 @@ var self = this;
         console.log('startFollowByTag', tag);
         var tags = [tag];
         Core.tags = tags;
+        Core.running = true;
         Connection.followTag(tags);
         runHandler(requestImagesByTags);
     };
@@ -26,6 +29,7 @@ var self = this;
             return;
         }
         Core.tags = tags;
+        Core.running = true;
         Connection.followTag(tags);
         runHandler(requestImagesByTags);
     }
@@ -98,7 +102,7 @@ var self = this;
     }
 
     setInterval(function(){
-        if(imagesBufferToShow.length <= 0){
+        if(imagesBufferToShow.length <= 0 || !Core.running){
             Core.currentHandler();
             return;
         }
@@ -122,15 +126,7 @@ var self = this;
     };
 
     function requestPopImages(){
-        Instagram.requestPopImages(function(imagesData){
-            for(var index = 0, count = imagesData.length; index < count; index++){
-                var imageData = imagesData[index];
-
-                if(imageData.location && !isNaN(imageData.location.longitude)){
-                    pushImage(imageData.id, imageData);
-                }
-            }
-        });
+        Instagram.requestPopImages(onGetImage);
     }
 
     function requestImagesByTags(){

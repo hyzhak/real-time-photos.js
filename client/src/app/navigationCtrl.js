@@ -77,7 +77,7 @@ define([
         $scope.tag = 'Christmas';
 
         $scope.getPlayButtonIcon = function(){
-            return $scope.playing?'icon-pause':'icon-play-circle';
+            return Core.running?'icon-pause':'icon-play-circle';
         }
 
         $scope.isStopActive = function(){
@@ -101,13 +101,15 @@ define([
         }
 
         $scope.togglePlay = function(){
-            if($scope.playing){
-                _gaq.push(['_trackPageview', '/#/stop']);
+            if(Core.running){
+                Core.stop();
+                _gaq.push(['_trackPageview', '/#/']);
             }else{
-                _gaq.push(['_trackPageview', '/#/play/tag/' + $scope.tag]);
+                Core.start();
+                //_gaq.push(['_trackPageview', '/#/play/tag/' + $scope.tag]);
             }
 
-            setPlaying(!$scope.playing);
+            //setPlaying(!$scope.playing);
         }
 
         $scope.startPlayMainButton = function(){
