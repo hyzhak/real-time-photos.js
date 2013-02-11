@@ -6,12 +6,14 @@
         </a>
     </div>
     <div class="image-preview-description">
-        <p><i>{{image.caption}}</i></p>
+        <p><i><small>{{image.caption}}</small></i></p>
         <a href="#/author/{{authorId}}"><b>by {{image.authorName}}</b></a>
         <!--<img src="{{image.profilePicture}}" alt="{{image.authorName}}">-->
-        <ul class="nav nav-pills">
-            <li ng-repeat="tag in image.tags" ng-class="checkActive(tag)"><a href="#/tag/{{tag}}">{{tag}}</a></li>
-        </ul>
+        <small>
+            <ul class="nav nav-pills">
+                <li ng-repeat="tag in image.tags" ng-class="checkActive(tag)"><a href="#/tag/{{tag}}" ng-click="close()">{{tag}}</a></li>
+            </ul>
+        </small>
         <!--
         <p>
             <span>
