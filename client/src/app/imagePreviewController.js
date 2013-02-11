@@ -1,11 +1,9 @@
-/**
- * Project: .
- * Copyright (c) 2012, Eugene-Krevenets
- */
 define([
+    'app/appModule',
     'app/core',
     'app/workspace'
-],function (Core, Workspace) {
+],function (appModule, Core, Workspace) {
+
     return {
         templateUrl : 'partials/imagePreview.html',
         resolve     : {
@@ -42,18 +40,19 @@ define([
         },
         controller  : function($scope, $location, $routeParams, image){
             console.log('imagePreviewController');
+            $('#image-preview').modal('show').on('hidden', function(){
+                $scope.close();
+            });
+
             $scope.image = image;
 
             $scope.close = function(){
                 //TODO: ?? doesn't work on custom execute. Need to lowlevel
                 //$location.path('/');
+                $('#image-preview').modal('hide');
                 _gaq.push(['_trackPageview', '/#/image/close']);
                 window.location = Workspace.defaultUrl;
             }
-
-            $('#image-preview').on('mousedown', function(){
-                return false;
-            });
 
             $scope.previewClick = function(e){
                 return false;
@@ -62,11 +61,6 @@ define([
             $scope.checkActive = function(tag){
                 return Core.isUseTag(tag)?'active':'';
             }
-
-            $(document).on('mousedown', function(){
-                $scope.close();
-                removeListeners();
-            });
 
             function removeListeners(){
                 $(document).off('mousedown');

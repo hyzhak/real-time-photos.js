@@ -73,12 +73,13 @@
     // Start application
     requirejs([
         //deps
+        'app/route',
         'app/core',
         'angular',
         'jquery',
         'libs/bootstrap/js/bootstrap',
         'app/navigationCtrl'
-    ],function(Core, angular, jquery){
+    ],function(Route, Core, angular, jquery){
         angular.bootstrap(document, ['app']);
     });
 })();

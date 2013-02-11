@@ -78,6 +78,7 @@ html, body {width: 100%; height: 100%;}
 }
 
 .image-preview{
+    /*
     background-color: #F3F3F3;
     position: absolute;
     left: 50%;
@@ -86,6 +87,7 @@ html, body {width: 100%; height: 100%;}
     margin-left: -306px;
     margin-top: -160px;
     z-index: 2;
+    */
 }
 
 .image-preview-image{
