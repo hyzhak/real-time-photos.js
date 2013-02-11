@@ -7,7 +7,7 @@ var self = this;
 
     var Core = {};
 
-    var cache = [];
+    var showedImages = [];
 
     Core.running = false;
     Core.pausedHandler = requestPopImages;
@@ -16,6 +16,7 @@ var self = this;
         tag = tag||'sunrise';
         console.log('startFollowByTag', tag);
         var tags = [tag];
+        filterOldImages(tags);
         Core.tags = tags;
         Core.running = true;
         Connection.followTag(tags);
@@ -28,6 +29,8 @@ var self = this;
         if(isUseTags(tags)){
             return;
         }
+
+        filterOldImages(tags);
         Core.tags = tags;
         Core.running = true;
         Connection.followTag(tags);
@@ -109,6 +112,8 @@ var self = this;
 
         var imageData = imagesBufferToShow.pop();
 
+        showedImages.push(imageData);
+
         map.placeImage(
             imageData.location.latitude,
             imageData.location.longitude,
@@ -160,6 +165,27 @@ var self = this;
 
         return Core.tags.indexOf(tag)>=0;
     };
+
+    function filterOldImages(tags) {
+        for(var index = showedImages.length - 1; index >= 0; index--){
+            var image = showedImages[index];
+
+            if(!isValidImage(image, tags)){
+                map.hideImage(image.id);
+                showedImages.splice(index, 1);
+            }
+        }
+    }
+
+    function isValidImage(image, tags) {
+        for(var i = tags.length - 1; i >= 0; i--){
+            if(image.tags.indexOf(tags[i])>=0){
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     function isUseTags(tags) {
         if(!Core.tags){

@@ -17,6 +17,7 @@ define([
         this.map = null;
         this.maxZoom = 16;
         this.timeoutForImage = 60*1000;
+        this.imagesOnMap = {};
     };
 
     Map.prototype.placeAt = function(domElement){
@@ -75,7 +76,7 @@ define([
         //return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
         var childCount = cluster.getChildCount();
 
-        var lastMarker = cluster.getAllChildMarkers()[childCount - 1];
+        var lastMarker = getNewestMarker(cluster.getAllChildMarkers());
         if(lastMarker.userData == null){
             console.log('there is something wrong.');
         }
@@ -88,6 +89,20 @@ define([
             className: '',
             html: '<div"><img src="'+lastImageUrl+'" class="img-polaroid" width="' + 64 + '" height="' + 64 + '"/><span>' + childCount + '</span></div>'
         });
+    }
+
+    function getNewestMarker(markers) {
+        var mostNewMarker = null;
+        var nistNewPlacedTime = Number.MIN_VALUE;
+        for(var index = markers.length - 1; index >= 0; index--){
+            var marker = markers[index];
+            if(nistNewPlacedTime < marker.userData.placedTime){
+                nistNewPlacedTime = marker.userData.placedTime;
+                mostNewMarker = marker;
+            }
+        }
+
+        return marker;
     }
 
     function onCreateClusterOrg(cluster) {
@@ -110,6 +125,15 @@ define([
         this.heatMap.data = [];
     }
 
+    Map.prototype.hideImage = function(id){
+        var marker = this.imagesOnMap[id];
+        if(!marker){
+            return;
+        }
+        removeMarker.call(this, marker);
+        delete this.imagesOnMap[id];
+    }
+
     Map.prototype.placeImage = function(lat, lng, width, height, imageUrl, pageUrl, caption, id, clickHandler){
         var containerId = 'image-on-map-container-' + id;
         var imageId = 'image-on-map-' + id;
@@ -121,7 +145,8 @@ define([
             imageId: imageId,
             imageIsVisible: false,
             loaderId: loaderId,
-            loaderIsVisible: true
+            loaderIsVisible: true,
+            placedTime: Date.now()
         };
 
         var image = new window.Image();
@@ -148,6 +173,8 @@ define([
         });
 
         marker.userData = userData;
+
+        this.imagesOnMap[id] = marker;
 
         this.imagesGroup.addLayer(marker);
 
@@ -183,7 +210,8 @@ define([
 
         if(this.timeoutForImage > 0){
             setTimeout(function(){
-                removeMarker.call(this, marker);
+                //removeMarker.call(this, marker);
+                this.hideImage(marker.userData.imageId);
             }.bind(this), this.timeoutForImage);
         }
     }
