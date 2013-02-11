@@ -4,7 +4,7 @@ define([
     'app/aboutController',
     'app/startController'
 ],function (appModule, Core, AboutController, StartContoller) {
-    appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', function ($scope, $rootScope, $route)  {
+    appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', '$location', function ($scope, $rootScope, $route, $location)  {
 
         //event had removed after 1.0.0
         //$rootScope.$on('$beforeRouteChange', function(scope, newRoute){
@@ -103,7 +103,8 @@ define([
         $scope.togglePlay = function(){
             if(Core.running){
                 Core.stop();
-                _gaq.push(['_trackPageview', '/#/']);
+                $location.url('/');
+                //_gaq.push(['_trackPageview', '/#/']);
             }else{
                 Core.start();
                 //_gaq.push(['_trackPageview', '/#/play/tag/' + $scope.tag]);
