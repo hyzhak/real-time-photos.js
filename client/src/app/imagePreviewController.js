@@ -51,7 +51,9 @@ define([
                 //$location.path('/');
                 $('#image-preview').modal('hide');
                 _gaq.push(['_trackPageview', '/#/image/close']);
-                window.location = Workspace.defaultUrl;
+                if(Workspace.defaultUrl){
+                    window.location = Workspace.defaultUrl;
+                }
             }
 
             $scope.previewClick = function(e){

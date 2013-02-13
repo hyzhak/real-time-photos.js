@@ -11,8 +11,10 @@ define([
     'mustache',
 
     //templates
-    'text!/../partials/imageOnMap.html'
-],function (L, MarkerCluster, HeatCanvas, Mustache, ImageTemplate) {
+    'text!/../partials/imageOnMap.html',
+    //templates
+    'text!/../partials/clusterOfImagesOnMap.html'
+],function (L, MarkerCluster, HeatCanvas, Mustache, ImageTemplate, ClusterOfImagesTemplate) {
     var Map = function(){
         this.map = null;
         this.maxZoom = 16;
@@ -22,6 +24,7 @@ define([
 
     Map.prototype.placeAt = function(domElement){
         this.map = L.map(domElement).setView([40.0, 0.0], 2);
+        this.domMap = domElement;
 
         this.mapLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
@@ -79,16 +82,88 @@ define([
         var lastMarker = getNewestMarker(cluster.getAllChildMarkers());
         if(lastMarker.userData == null){
             console.log('there is something wrong.');
+            return;
         }
+
         var lastImageUrl = lastMarker.userData.imageUrl;
         //var lastImageUrl = cluster.getAllChildMarkers()[childCount - 1].options.icon.options.iconUrl;
 
-        return new L.DivIcon({
+        var imageInClusterId = lastMarker.userData.imageId + '-in-cluster';
+        var loaderId = lastMarker.userData.imageId + '-in-cluster-preloader';
+
+        var userData = {
+            imageIn:imageInClusterId,
+            imageUrl:lastImageUrl,
+            loaderId:loaderId,
+            childCount:childCount,
+            isLoader:true
+        };
+
+        var imageHTML = Mustache.render(ClusterOfImagesTemplate, userData);
+
+        var icon = new L.DivIcon({
             iconAnchor: new L.Point(32, 32),
             iconSize: new L.Point(64, 64),
             className: '',
-            html: '<div"><img src="'+lastImageUrl+'" class="img-polaroid" width="' + 64 + '" height="' + 64 + '"/><span>' + childCount + '</span></div>'
+            //html: '<div"><img style="display: none;" id="' + imageInClusterId + '" src="'+lastImageUrl+'" class="img-polaroid" width="' + 64 + '" height="' + 64 + '"/><span>' + childCount + '</span></div>'
+            html: imageHTML
         });
+
+        var time = Date.now();
+
+        var image = new Image();
+        image.onload = function(){
+
+            console.log('onload', lastImageUrl)
+
+            if(image.width <= 0){
+                console.log('>>>> Hell Yeah!');
+            }
+
+            var imageDom = document.getElementById(imageInClusterId);
+            console.log('imageDom', imageDom);
+            var loaderDom = document.getElementById(loaderId);
+            console.log('loaderDom', loaderDom);
+
+            if(!!imageDom && !!loaderDom){
+                console.log('1');
+                if(Date.now() - time > 100){
+                    console.log('before ' + imageInClusterId);
+                    $(imageDom).fadeIn(function(){
+                        console.log('after ' + imageInClusterId);
+                        if(loaderDom && !!loaderDom.parentNode){
+                            loaderDom.parentNode.removeChild(loaderDom);
+                        }
+                    });
+                }else{
+                    $(imageDom).show();
+                    if(loaderDom && !!loaderDom.parentNode){
+                        loaderDom.parentNode.removeChild(loaderDom);
+                    }
+                }
+            }
+
+            if(imageDom){
+                console.log('html', imageDom.parentNode);
+            }
+
+            userData.isLoader = false;
+            icon.options.html = Mustache.render(ClusterOfImagesTemplate, userData);
+        }
+
+        image.onerror = function(){
+            console.log('onerror');
+        }
+
+        console.log('request', lastImageUrl);
+
+        image.src = lastImageUrl;
+/*
+        icon.on('remove', function(){
+            console.log('remove!');
+        })*/
+
+        return icon;
     }
 
     function getNewestMarker(markers) {
@@ -196,6 +271,7 @@ define([
         var userData = marker.userData;
         if(userData == null){
             console.log('something wrong!');
+            return;
         }
         userData.loaderIsVisible = false;
         userData.imageIsVisible = true;
@@ -211,13 +287,14 @@ define([
         if(this.timeoutForImage > 0){
             setTimeout(function(){
                 //removeMarker.call(this, marker);
+                console.log('Hell yeay! remove old image')
                 this.hideImage(marker.userData.imageId);
             }.bind(this), this.timeoutForImage);
         }
     }
 
     function onLoadErrorImageForMarker(marker){
-        removeMarker(marker).bind(this);
+        removeMarker.call(this, marker);
     }
 
     function refreshMarker(marker, html, userData){

@@ -1,0 +1,28 @@
+<div class="imageContainer" style="width: {{imageWidth}}; height: {{imageHeight}}">
+    <div ng-show="imageIsVisible()">
+        <div class="image" style="background-image:url({{imageSrc}});width: {{imageWidth}}; height: {{imageHeight}}">
+        </div>
+    </div>
+    <div ng-hide="imageIsVisible()">
+        <div style="width: {{imageWidth}}; height: {{imageHeight}}">
+            <div class="spinner">
+                <div class="spinnerAnimation">
+                    <svg class="spinner">
+                        <g transform="translate(9,9)">
+                            <g stroke-width="2" stroke-linecap="round" stroke="#666">
+                                <line x1="0" y1="4" x2="0" y2="7" transform="rotate(0, 0, 0)" opacity="0"></line>
+                                <line x1="0" y1="4" x2="0" y2="7" transform="rotate(45, 0, 0)" opacity="0.12244897959183675"></line>
+                                <line x1="0" y1="4" x2="0" y2="7" transform="rotate(90, 0, 0)" opacity="0.2448979591836735"></line>
+                                <line x1="0" y1="4" x2="0" y2="7" transform="rotate(135, 0, 0)" opacity="0.3673469387755102"></line>
+                                <line x1="0" y1="4" x2="0" y2="7" transform="rotate(180, 0, 0)" opacity="0.489795918367347"></line>
+                                <line x1="0" y1="4" x2="0" y2="7" transform="rotate(225, 0, 0)" opacity="0.6122448979591838"></line>
+                                <line x1="0" y1="4" x2="0" y2="7" transform="rotate(270, 0, 0)" opacity="0.7346938775510204"></line>
+                                <line x1="0" y1="4" x2="0" y2="7" transform="rotate(315, 0, 0)" opacity="0.8571428571428571"></line>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

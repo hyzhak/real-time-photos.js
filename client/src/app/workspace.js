@@ -1,6 +1,7 @@
 define([
 ],function () {
     return {
-        defaultUrl: ''
+        defaultUrl: '/#/tag/love+valentin+kiss',
+        tagName: 'Love'
     }
 });

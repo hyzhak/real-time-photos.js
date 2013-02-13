@@ -7,6 +7,8 @@ var self = this;
 
     var Core = {};
 
+    var availableImages = 10;
+
     var showedImages = [];
 
     Core.running = false;
@@ -27,6 +29,7 @@ var self = this;
         //TODO follow tags
         console.log('start follow by tags', tags);
         if(isUseTags(tags)){
+            Core.running = true;
             return;
         }
 
@@ -109,6 +112,9 @@ var self = this;
             Core.currentHandler();
             return;
         }
+        if(--availableImages<=0){
+        //    return;
+        };
 
         var imageData = imagesBufferToShow.pop();
 

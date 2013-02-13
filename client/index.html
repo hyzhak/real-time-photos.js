@@ -23,6 +23,8 @@
     <![endif]-->
 
     <link rel="stylesheet" href="libs/leaflet.markercluster/MarkerCluster.Default.css"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="libs/leaflet.markercluster/MarkerCluster.Default.ie.css"/>
     <![endif]-->
@@ -73,7 +75,11 @@
 <div id="images-map"></div>
 
 <div class="footer">
-    <div class="inline"><div class="play-button-container"><button class="btn btn-large" type="button" ng-click="togglePlay()"><i class="{{getPlayButtonIcon()}}"></i></button></div><h1>Look! Images on the map! <small><a href="#/about">About</a></small></h1></div>
+    <div class="inline">
+        <div class="play-button-container"><button class="btn btn-large" type="button" ng-click="togglePlay()"><i class="{{getPlayButtonIcon()}}"></i></button>
+        </div>
+        <h1>Look! Images on the map! <small><a href="#/about">About</a></small></h1>
+    </div>
     <div>
         <div id="fb-root"></div>
         <script>(function(d, s, id) {

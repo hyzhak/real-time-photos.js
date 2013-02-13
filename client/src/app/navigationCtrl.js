@@ -2,8 +2,9 @@ define([
     'app/appModule',
     'app/core',
     'app/aboutController',
-    'app/startController'
-],function (appModule, Core, AboutController, StartContoller) {
+    'app/startController',
+    'app/workspace'
+],function (appModule, Core, AboutController, StartContoller, Workspace) {
     appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', '$location', function ($scope, $rootScope, $route, $location)  {
 
         //event had removed after 1.0.0
@@ -51,7 +52,10 @@ define([
             $rootScope.templates.modalWindowUrl = modalWindowUrl;
             $('#modal-window').modal('show').on('hidden', function(){
                 $rootScope.templates.modalWindowUrl = null;
-
+                if(Workspace.defaultUrl){
+                    //$location.url('/#/tag/' + Workspace.tagCollection);
+                    window.location = Workspace.defaultUrl;
+                }
                 //TODO : if user press outside the modal window we need to run default action:
                 //* for start page it's default tag
                 //  * it shall run images with default tag;
