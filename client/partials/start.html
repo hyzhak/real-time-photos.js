@@ -1,4 +1,4 @@
-<div ng-controller="AboutController">
+<div>
     <div class="modal-header">
         <h1>Look</h1>
     </div>
@@ -22,8 +22,8 @@
     </div>
     <div class="modal-footer">
         <div class="input-append">
-            <input class="span2" id="appendedInputButton" type="text" placeholder="#my #tags">
-            <button class="btn" type="button">Go!</button>
+            <input class="span2" id="appendedInputButton" type="text" placeholder="#my #tags" ng-model="tagsText">
+            <button class="btn" type="button" ng-click="requestCustomTag()">Go!</button>
         </div>
     </div>
 </div>

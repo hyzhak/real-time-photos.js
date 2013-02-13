@@ -78,7 +78,29 @@ define([
             }
         }
 
-        $scope.tag = 'Christmas';
+        $scope.tagsText = '#love #valentin #kiss';
+
+        $scope.requestCustomTag = function(){
+            var tags = getTags($scope.tagsText);
+            window.location = '/#/tag/' + tags.join('+');
+        }
+
+        function getTags(tagsText) {
+            //var regexp = /(?<!["'=])#[0-Z_]+\b/;
+            //var regexp = new RegExp('(?<!["\'=])#[0-Z_]+\b');
+            //var regexp = /(?<!["'=])#[0-Z_]+\b/gi;
+            //var regexp = /\S*#(?:\[[^\]]+\]|\S+)/gi;
+
+            //TODO : find hashtags and collect them without '#'
+            var result = tagsText.match(/(#[A-Za-z0-9\-\_]+)/g) || [];
+            for(var index = result.length - 1; index >= 0; index--){
+                result[index] = result[index].replace('#', '');
+            }
+
+            return result;
+            //var regexp = /(\S*#\[[^\]]+\])|(\S*#\S+)/gi;
+            //return regexp.exec(tagsText);
+        }
 
         $scope.getPlayButtonIcon = function(){
             return Core.running?'icon-pause':'icon-play-circle';
