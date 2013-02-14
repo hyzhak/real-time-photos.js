@@ -12,7 +12,7 @@ define([
         $rootScope.$on('$routeChangeStart', function(scope, newRoute){
             if (!newRoute || !newRoute.$route) return;
 
-            _gaq.push(['_trackPageview']);
+            _gaq.push(['_trackPageview', window.location]);
             //Load any required resources here
             //Set the state bound do the ng-include src attribute
 
@@ -85,6 +85,7 @@ define([
         $scope.tagsText = '#love #valentin #kiss';
 
         $scope.requestCustomTag = function(){
+            _gaq.push(['_trackPageview', '/#/requestCustomTag/' + $scope.tagsText]);
             var tags = parseTagsFromText($scope.tagsText);
             //window.location = window.location.origin + window.location.pathname + '#/tag/' + tags.join('+');
             window.location = '#/tag/' + tags.join('+');
@@ -142,11 +143,6 @@ define([
             }
 
             //setPlaying(!$scope.playing);
-        }
-
-        $scope.startPlayMainButton = function(){
-            _gaq.push(['_trackPageview', '/#/playMainButton/tag/' + $scope.tag]);
-            setPlaying(true);
         }
 
         $scope.toggleHeatmap = function(){
