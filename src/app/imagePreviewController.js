@@ -8,7 +8,7 @@ define([
         templateUrl : 'partials/imagePreview.html',
         resolve     : {
             image : function($q, $route){
-                _gaq.push(['_trackPageview', '/#/image/' + $route.current.params.imageId]);
+                //_gaq.push(['_trackPageview', '/#/image/' + $route.current.params.imageId]);
                 var deferred = $q.defer();
                 Core.getImageDataById($route.current.params.imageId, function(imageDataResult){
                     //TODO : after change data need to refresh DOM
