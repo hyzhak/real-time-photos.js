@@ -11,9 +11,9 @@ define([
     'mustache',
 
     //templates
-    'text!/../partials/imageOnMap.html',
+    'text!../../partials/imageOnMap.html',
     //templates
-    'text!/../partials/clusterOfImagesOnMap.html'
+    'text!../../partials/clusterOfImagesOnMap.html'
 ],function (L, MarkerCluster, HeatCanvas, Mustache, ImageTemplate, ClusterOfImagesTemplate) {
     var Map = function(){
         this.map = null;
