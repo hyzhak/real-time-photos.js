@@ -41,7 +41,7 @@ define([
             }
 
             //update tags
-            setTags(Workspace.tags);
+            //setTags(Workspace.tags);
         });
 
         function hideModalWindow(handler) {
