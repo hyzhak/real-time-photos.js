@@ -3,7 +3,6 @@ define([
     'app/workspace'
 ],function (Core, Workspace) {
     var TagController = function($scope, $routeParams, $location){
-        console.log('TagController');
         var tags = $routeParams.tags;
 
         var tagsArray = tags.split('+');
@@ -11,9 +10,9 @@ define([
         Core.startFollowByTags(tagsArray);
 
         Workspace.defaultUrl = $location.absUrl();
+        Workspace.tags = tagsArray;
 
         document.title = 'Real-time photos on map with love / #' + tagsArray.join(' #');
-        console.log(document.title)
     }
 
     return TagController;

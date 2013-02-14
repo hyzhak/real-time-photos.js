@@ -34,9 +34,11 @@
             'http://code.createjs.com/easeljs-0.5.0.min.js' : {
                 exports : 'createjs'
             },
+            /*
             '/socket.io/socket.io.js' : {
                 exports: 'io'
             },
+            */
             //CDN:
             //'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js':{
             'leaflet':{

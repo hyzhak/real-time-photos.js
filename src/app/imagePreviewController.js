@@ -25,6 +25,7 @@ define([
                         height: 306,
                         authorName: imageDataResult.user.full_name||imageDataResult.user.username,
                         authorId: imageDataResult.user.id,
+                        authorUrl: 'http://instagr.am/' + imageDataResult.user.username,
                         profilePicture: imageDataResult.user.profile_picture,
                         locationName: (imageDataResult.location?imageDataResult.location.name:null)||'somewhere',
                         locationId: imageDataResult.location?imageDataResult.location.id:null,

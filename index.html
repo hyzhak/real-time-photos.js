@@ -51,7 +51,39 @@
     <script data-main="src/app.js" src="libs/requirejs/require.js"></script>
 </head>
 <body ng-controller="NavigationCtrl">
+<div>
+    <div class="social-links">
+        <div class="social-links-element social-links-fb">
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=534529063235252";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
 
+            <div class="fb-like" data-href="http://hyzhak.github.com/real-time-photos.js/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+        </div>
+        <div class="social-links-element social-links-gp">
+            <!-- Place this tag where you want the +1 button to render. -->
+            <div class="g-plusone" data-size="medium" data-annotation="inline" data-width="120" data-href="http://hyzhak.github.com/real-time-photos.js/"></div>
+
+            <!-- Place this tag after the last +1 button tag. -->
+            <script type="text/javascript">
+                (function() {
+                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                    po.src = 'https://apis.google.com/js/plusone.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                })();
+            </script>
+        </div>
+        <div class="social-links-element social-links-tw">
+            <a href="https://twitter.com/share" class="twitter-share-button" data-via="hyzhak_en" data-lang="en">Tweet</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
+    </div>
+</div>
 <div ng-view></div>
 
 <div>
@@ -72,38 +104,7 @@
         <div class="play-button-container"><button class="btn btn-large" type="button" ng-click="togglePlay()"><i class="{{getPlayButtonIcon()}}"></i></button>
         </div>
         <div class="footer-caption">
-            <h1>Look! It's real! <small><a href="#/about">About</a></small></h1>
-        </div>
-        <div class="social-links">
-            <div class="social-links-element social-links-fb">
-                <div id="fb-root"></div>
-                <script>(function(d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) return;
-                    js = d.createElement(s); js.id = id;
-                    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=534529063235252";
-                    fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));</script>
-
-                <div class="fb-like" data-href="http://hyzhak.github.com/real-time-photos.js/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
-            </div>
-            <div class="social-links-element social-links-gp">
-                <!-- Place this tag where you want the +1 button to render. -->
-                <div class="g-plusone" data-size="medium" data-annotation="inline" data-width="120" data-href="http://hyzhak.github.com/real-time-photos.js/"></div>
-
-                <!-- Place this tag after the last +1 button tag. -->
-                <script type="text/javascript">
-                    (function() {
-                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                        po.src = 'https://apis.google.com/js/plusone.js';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-                    })();
-                </script>
-            </div>
-            <div class="social-links-element social-links-tw">
-                <a href="https://twitter.com/share" class="twitter-share-button" data-via="hyzhak_en" data-lang="en">Tweet</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-            </div>
+            <h1>Real-time Photos...<small><a href="#/about">About</a></small></h1>
         </div>
     </div>
 </div>

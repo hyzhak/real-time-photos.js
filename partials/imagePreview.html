@@ -1,14 +1,14 @@
 <!--<div id="image-preview" class="image-preview" ng-controller="ImageDetails">-->
 <div id="image-preview" class="image-preview modal hide fade">
     <div class="image-preview-image img-polaroid" style="width: 306px;height: 306px;">
-        <a target="_blank" href="{{image.linkOutside}}">
+        <a target="instagram" href="{{image.linkOutside}}">
             <!--<img width="{{image.width}}" height="{{image.height}}" ng-src="{{image.url}}"/>-->
             <div smart-image width="{{image.width}}" height="{{image.height}}" src="{{image.url}}"></div>
         </a>
     </div>
     <div class="image-preview-description">
         <p><i><small>{{image.caption}}</small></i></p>
-        <a href="#/author/{{authorId}}"><b>by {{image.authorName}}</b></a>
+        <a target="instagram" href="{{image.authorUrl}}"><b>by {{image.authorName}}</b></a>
         <!--<img src="{{image.profilePicture}}" alt="{{image.authorName}}">-->
         <small>
             <ul class="nav nav-pills">

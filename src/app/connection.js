@@ -1,5 +1,5 @@
 define([
-    '/socket.io/socket.io.js'
+    /*'/socket.io/socket.io.js'*/
 ],function (io) {
     var socket;
 
@@ -22,6 +22,7 @@ define([
     var Connection = {};
 
     Connection.followTag = function(tagName){
+        return;
         if(isDisconnected()){
             connect();
         }
