@@ -86,7 +86,8 @@ define([
 
         $scope.requestCustomTag = function(){
             var tags = parseTagsFromText($scope.tagsText);
-            window.location = '/#/tag/' + tags.join('+');
+            //window.location = window.location.origin + window.location.pathname + '#/tag/' + tags.join('+');
+            window.location = '#/tag/' + tags.join('+');
         }
 
         function parseTagsFromText(tagsText) {
