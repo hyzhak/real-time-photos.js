@@ -10,8 +10,9 @@ define([
         //event had removed after 1.0.0
         //$rootScope.$on('$beforeRouteChange', function(scope, newRoute){
         $rootScope.$on('$routeChangeStart', function(scope, newRoute){
-            console.log('$routeChangeStart', scope, newRoute);
             if (!newRoute || !newRoute.$route) return;
+
+            _gaq.push(['_trackPageview']);
             //Load any required resources here
             //Set the state bound do the ng-include src attribute
 
@@ -38,6 +39,9 @@ define([
                     $rootScope.templates = newTemplates[key];
                 }
             }
+
+            //update tags
+            setTags(Workspace.tags);
         });
 
         function hideModalWindow(handler) {
@@ -81,11 +85,11 @@ define([
         $scope.tagsText = '#love #valentin #kiss';
 
         $scope.requestCustomTag = function(){
-            var tags = getTags($scope.tagsText);
+            var tags = parseTagsFromText($scope.tagsText);
             window.location = '/#/tag/' + tags.join('+');
         }
 
-        function getTags(tagsText) {
+        function parseTagsFromText(tagsText) {
             //var regexp = /(?<!["'=])#[0-Z_]+\b/;
             //var regexp = new RegExp('(?<!["\'=])#[0-Z_]+\b');
             //var regexp = /(?<!["'=])#[0-Z_]+\b/gi;
@@ -101,6 +105,21 @@ define([
             //var regexp = /(\S*#\[[^\]]+\])|(\S*#\S+)/gi;
             //return regexp.exec(tagsText);
         }
+
+        function setTags(tags){
+            if($scope.tags == tags){
+                return;
+            }
+
+            $scope.$apply(function(){
+                $scope.tags == tags;
+            });
+        }
+
+        $scope.tags = [];
+        $scope.$watch('tags', function(newValue){
+            $scope.tagsText = newValue.join(',');
+        });
 
         $scope.getPlayButtonIcon = function(){
             return Core.running?'icon-pause':'icon-play-circle';

@@ -11,7 +11,6 @@ define([
             params += '?';
         }
         var url = 'https://api.instagram.com/v1/' + params + 'client_id=' + Config.INSTAGRAM_CLIENT_ID;
-        console.log('requestFromInstagram', url);
         $.ajax(url, {
             crossDomain:true,
             dataType:'jsonp'
@@ -23,7 +22,6 @@ define([
                     }
                     return;
                 }
-                console.log('ajax', response);
                 var dataArray = response.data;
                 callback(dataArray);
             });

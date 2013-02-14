@@ -114,23 +114,12 @@ define([
         var image = new Image();
         image.onload = function(){
 
-            console.log('onload', lastImageUrl)
-
-            if(image.width <= 0){
-                console.log('>>>> Hell Yeah!');
-            }
-
             var imageDom = document.getElementById(imageInClusterId);
-            console.log('imageDom', imageDom);
             var loaderDom = document.getElementById(loaderId);
-            console.log('loaderDom', loaderDom);
 
             if(!!imageDom && !!loaderDom){
-                console.log('1');
                 if(Date.now() - time > 100){
-                    console.log('before ' + imageInClusterId);
                     $(imageDom).fadeIn(function(){
-                        console.log('after ' + imageInClusterId);
                         if(loaderDom && !!loaderDom.parentNode){
                             loaderDom.parentNode.removeChild(loaderDom);
                         }
@@ -143,10 +132,6 @@ define([
                 }
             }
 
-            if(imageDom){
-                console.log('html', imageDom.parentNode);
-            }
-
             userData.isLoader = false;
             icon.options.html = Mustache.render(ClusterOfImagesTemplate, userData);
         }
@@ -154,8 +139,6 @@ define([
         image.onerror = function(){
             console.log('onerror');
         }
-
-        console.log('request', lastImageUrl);
 
         image.src = lastImageUrl;
 /*
@@ -286,8 +269,6 @@ define([
 
         if(this.timeoutForImage > 0){
             setTimeout(function(){
-                //removeMarker.call(this, marker);
-                console.log('Hell yeay! remove old image')
                 this.hideImage(marker.userData.imageId);
             }.bind(this), this.timeoutForImage);
         }

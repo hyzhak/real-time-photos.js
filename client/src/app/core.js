@@ -16,7 +16,6 @@ var self = this;
 
     Core.startFollowByTag = function(tag){
         tag = tag||'sunrise';
-        console.log('startFollowByTag', tag);
         var tags = [tag];
         filterOldImages(tags);
         Core.tags = tags;
@@ -27,7 +26,6 @@ var self = this;
 
     Core.startFollowByTags = function(tags){
         //TODO follow tags
-        console.log('start follow by tags', tags);
         if(isUseTags(tags)){
             Core.running = true;
             return;
@@ -45,7 +43,6 @@ var self = this;
     }
 
     Core.stop = function(){
-        console.log('stop');
 
         if(!Core.running){
             return;

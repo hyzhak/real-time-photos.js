@@ -8,8 +8,8 @@
             //CDN
             'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min',
             //CDN
-            //'leaflet' : 'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet',
-            'leaflet' : '../libs/leaflet/leaflet-src',
+            'leaflet' : 'http://cdn.leafletjs.com/leaflet-0.5.1/leaflet',
+            //'leaflet' : '../libs/leaflet/leaflet-src',
 
             //CDN
             //'angular' : 'http://code.angularjs.org/angular-1.0.0rc7.min',
@@ -34,9 +34,11 @@
             'http://code.createjs.com/easeljs-0.5.0.min.js' : {
                 exports : 'createjs'
             },
+            /*
             '/socket.io/socket.io.js' : {
                 exports: 'io'
             },
+            */
             //CDN:
             //'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js':{
             'leaflet':{
