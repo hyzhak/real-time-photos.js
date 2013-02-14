@@ -107,21 +107,6 @@ define([
             //return regexp.exec(tagsText);
         }
 
-        function setTags(tags){
-            if($scope.tags == tags){
-                return;
-            }
-
-            $scope.$apply(function(){
-                $scope.tags == tags;
-            });
-        }
-
-        $scope.tags = [];
-        $scope.$watch('tags', function(newValue){
-            $scope.tagsText = newValue.join(',');
-        });
-
         $scope.getPlayButtonIcon = function(){
             return Core.running?'icon-pause':'icon-play-circle';
         }

@@ -6,25 +6,42 @@ body{
 html, body {width: 100%; height: 100%;}
 
 .footer{
-    position:absolute;
-    bottom: 0px;
+    /*flexible*/
+    /*position:absolute;
+    bottom: 0px;*/
 }
 
 .copy-right{
-    position:absolute;
+    /*flexible*/
+    /*position:absolute;
     bottom: 0px;
-    right: 0px;
+    right: 0px;*/
+
+    /*fixed*/
+    position: absolute;
+    right: 4px;
+}
+
+.about-link{
+    position: absolute;
+    right: 4px;
 }
 
 #images-map{
     background-color: #a9a9a9;
-    /*width: 100%;
-    min-height: 70%;*/
-    bottom:84px;
-    top:32px;
+
+    /*flexible*/
+    /*
     left:2px;
     right:2px;
-    position:absolute;
+    bottom:84px;
+    top:32px;
+    position:absolute;*/
+
+    /*fixed height*/
+    clear: both;
+    height: 550px;
+    margin: 4px;
 }
 
 .instaImage{
@@ -157,4 +174,8 @@ html, body {width: 100%; height: 100%;}
 .about-subtitle{
     font-family: 'Lobster Two', cursive;
     color: #808080;
+}
+
+.comments{
+    padding: 8px;
 }
