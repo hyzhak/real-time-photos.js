@@ -79,6 +79,10 @@ define([
             }catch(e){
                 console.log(e);
                 console.log(modalWindow);
+
+                setTimeout(function(){
+                    showModalWindow(modalWindowUrl);
+                }, 100);
             }
         }
 
