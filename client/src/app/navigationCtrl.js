@@ -169,24 +169,26 @@ define([
             Core.setVisibleImages(!heatMap);
         }
 
-        $scope.playChristmas = function(){
-            setPlaying(true, 'christmas');
-        }
-
-        $scope.clearAllImages = function(){
-            Core.clearAllImages();
+        $scope.requestMore = function(){
+            console.log('requestMore');
+            Core.start();
+            Core.uselessRequest = 0;
+            $scope.noMoreRealtimePhotos = false;
         }
 
         //FIXME:
         $timeout(checkTimout, 3*1000);
 
         function checkTimout(){
-            if(Core.uselessRequest > 3){
-                //got useless request - just show pause popup
-                window.location = '#';//window.location.origin + window.location.pathname;
-                console.log('Core.uselessRequest window.location', window.location);
-                Core.uselessRequest = 0;
+            if(Core.uselessRequest > 6){
+                $scope.noMoreRealtimePhotos = true;
+                Core.stop();
+                //TODO : no any real-time photos, so come later or choose other theme:
+                //Core.stop();
+                //$location.url('/');
+                //Core.uselessRequest = 0;
             }
+
             $timeout(checkTimout, 3*1000);
         }
     }]);
