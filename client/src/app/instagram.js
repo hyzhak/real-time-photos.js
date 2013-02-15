@@ -31,14 +31,13 @@ define([
             console.log('done', response);
             _gaq.push(['_trackEvent', 'instagram', 'request-done', params]);
             switch (response.meta.code) {
-                case 200:
-                    console.log('error', response.meta);
+                case 420:
+                    console.log('error', response);
+                    _gaq.push(['_trackEvent', 'instagram', 'request-error', params]);
+                    timeLastFail = Date.now();
                     if(errorHandler){
                         errorHandler(response.meta);
                     }
-                    return;
-                case 420:
-                    console.log('error', response);
                     return;
                 default:
                     var dataArray = response.data;
