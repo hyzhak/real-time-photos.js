@@ -62,6 +62,11 @@ requirejs.config({
                 'jquery'
             ]
         },
+        '../libs/bootstrap/js/bootstrap':{
+            deps: [
+                'jquery'
+            ]
+        },
 
         'libs/bootstrap/js/bootstrap': ['jquery']
     }
