@@ -185,10 +185,9 @@ define([
                 //got useless request - just show pause popup
                 window.location = '#';//window.location.origin + window.location.pathname;
                 console.log('Core.uselessRequest window.location', window.location);
+                Core.uselessRequest = 0;
             }
             $timeout(checkTimout, 3*1000);
         }
-
-
     }]);
 });
