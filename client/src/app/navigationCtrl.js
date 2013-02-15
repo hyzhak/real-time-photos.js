@@ -54,18 +54,36 @@ define([
                 return;
             }
             $rootScope.templates.modalWindowUrl = modalWindowUrl;
-            $('#modal-window').modal('show').on('hidden', function(){
-                $rootScope.templates.modalWindowUrl = null;
-                if(Workspace.defaultUrl){
-                    //$location.url('/#/tag/' + Workspace.tagCollection);
-                    window.location = Workspace.defaultUrl;
-                }
-                //TODO : if user press outside the modal window we need to run default action:
-                //* for start page it's default tag
-                //  * it shall run images with default tag;
-                //  * or continue if we already execute a process;
-                //* for about button we need just return to continue execute process
-            });
+
+            var modalWindow = $('#modal-window');
+            if(modalWindow.length <= 0){
+                setTimeout(function(){
+                    showModalWindow(modalWindowUrl);
+                }, 100);
+                return;
+            }
+
+            try{
+                modalWindow.modal('show').on('hidden', function(){
+                    $rootScope.templates.modalWindowUrl = null;
+                    if(Workspace.defaultUrl){
+                        //$location.url('/#/tag/' + Workspace.tagCollection);
+                        window.location = Workspace.defaultUrl;
+                    }
+                    //TODO : if user press outside the modal window we need to run default action:
+                    //* for start page it's default tag
+                    //  * it shall run images with default tag;
+                    //  * or continue if we already execute a process;
+                    //* for about button we need just return to continue execute process
+                });
+            }catch(e){
+                console.log(e);
+                console.log(modalWindow);
+
+                setTimeout(function(){
+                    showModalWindow(modalWindowUrl);
+                }, 100);
+            }
         }
 
         var heatMap = false;

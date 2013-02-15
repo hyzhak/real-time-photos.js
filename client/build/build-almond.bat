@@ -1,0 +1,1 @@
+node ../node_modules/requirejs/bin/r.js -o ../src/app.build-almond.js optimize=none

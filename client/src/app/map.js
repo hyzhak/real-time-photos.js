@@ -5,8 +5,8 @@
 define([
     //'http://cdn.leafletjs.com/leaflet-0.4.5/leaflet.js', //CDN
     'leaflet',
-    'libs/leaflet.markercluster/leaflet.markercluster-src',
-    'libs/leaflet.heatcanvas/heatcanvas-leaflet',
+    'markercluster',
+    'heatcanvas',
 
     'mustache',
 

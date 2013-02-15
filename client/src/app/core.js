@@ -155,7 +155,6 @@ var self = this;
 
     function doNothing(){};
 
-
     function runHandler(handler){
         Core.currentHandler = handler;
         Core.currentHandler();
