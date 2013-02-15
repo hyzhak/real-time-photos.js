@@ -183,7 +183,7 @@ define([
         function checkTimout(){
             if(Core.uselessRequest > 3){
                 //got useless request - just show pause popup
-                window.location = window.location.origin + window.location.pathname;
+                window.location = '#';//window.location.origin + window.location.pathname;
                 console.log('Core.uselessRequest window.location', window.location);
             }
             $timeout(checkTimout, 3*1000);

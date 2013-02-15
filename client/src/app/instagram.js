@@ -8,6 +8,22 @@ define([
 
     var instagramRequestCount = 0;
 
+    var timeStart = Date.now();
+
+    var requestPerSecond = 0;
+
+    setInterval(function(){
+        var timePass = Date.now() - timeStart;
+        var newRequestPerSecond = instagramRequestCount / timePass;
+        if(requestPerSecond == newRequestPerSecond){
+            return;
+        }
+        requestPerSecond = newRequestPerSecond;
+        var requestPerHour = 60*60*requestPerSecond;
+        console.log('requestPerHour', requestPerHour);
+        _gaq.push(['_trackEvent', 'instagram', 'requestPerHour', {}, requestPerHour]);
+    }, 10*1000);
+
     //@private
     function requestFromInstagram(params, callback, errorHandler) {
         console.log('requestFromInstagram', params);
@@ -23,9 +39,13 @@ define([
         var url = 'https://api.instagram.com/v1/' + params + 'client_id=' + Config.INSTAGRAM_CLIENT_ID;
         //var url = 'http://google.com';
 
-        instagramRequestCount++;
+        function incRequestCount() {
+            instagramRequestCount++;
+            _gaq.push(['_trackEvent', 'instagram', 'request', params, instagramRequestCount]);
+            var requestPerSecond = timeStart
+        }
 
-        _gaq.push(['_trackEvent', 'instagram', 'request', params, instagramRequestCount]);
+        incRequestCount();
 
         console.log('instagramRequestCount', instagramRequestCount);
 
