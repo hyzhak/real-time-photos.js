@@ -11,6 +11,15 @@ var self = this;
 
     var showedImages = [];
 
+    var timeLastEmptyResponse = 0;
+    var emptyResponseInterval = 10*1000; //if fail, wait for 1 minute
+    var emptyResponseTags = [];
+
+    Core.uselessRequest = 0;
+
+    //we have requested Instagram
+    var haveRequested = false;
+
     Core.running = false;
     Core.pausedHandler = requestPopImages;
 
@@ -97,11 +106,13 @@ var self = this;
 
     function pushImage(id, imageData){
         if(images[id]){
-            return;
+            return false;
         }
 
         images[id] = imageData;
         imagesBufferToShow.push(imageData);
+
+        return true;
     }
 
     setInterval(function(){
@@ -138,6 +149,18 @@ var self = this;
     }
 
     function requestImagesByTags(){
+        if(haveRequested){
+            return;
+        }
+
+        if(Date.now() - timeLastEmptyResponse < emptyResponseInterval && Core.tags == emptyResponseTags){
+            return;
+        }
+
+        haveRequested = true;
+
+        emptyResponseTags = Core.tags;
+
         var tags = Core.tags;
         for(var index = 0, count = tags.length; index < count; index++){
             Instagram.requestImageByTag(tags[index], onGetImage);
@@ -145,12 +168,27 @@ var self = this;
     };
 
     function onGetImage(imagesData){
+        haveRequested = false;
+        var usefulImageCount = 0;
         for(var index = 0, count = imagesData.length; index < count; index++){
             var imageData = imagesData[index];
             if( imageData.location && !isNaN(imageData.location.longitude)){
-                pushImage(imageData.id, imageData);
+                usefulImageCount += pushImage(imageData.id, imageData);
             }
         }
+
+        if(usefulImageCount <= 0){
+            timeLastEmptyResponse = Date.now();
+            _gaq.push(['_trackEvent', 'instagram', 'drain', Core.tags]);
+            Core.uselessRequest++;
+            if(Core.uselessRequest > 3){
+                console.log('Too many useless requests');
+            }
+        }else{
+            Core.uselessRequest = 0;
+        }
+
+        _gaq.push(['_trackEvent', 'instagram', 'usefulImageCount', Core.tags, usefulImageCount]);
     }
 
     function doNothing(){};

@@ -5,7 +5,7 @@ define([
     'app/startController',
     'app/workspace'
 ],function (appModule, Core, AboutController, StartContoller, Workspace) {
-    appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', '$location', function ($scope, $rootScope, $route, $location)  {
+    appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', '$location', '$timeout', function ($scope, $rootScope, $route, $location, $timeout)  {
 
         //event had removed after 1.0.0
         //$rootScope.$on('$beforeRouteChange', function(scope, newRoute){
@@ -169,12 +169,27 @@ define([
             Core.setVisibleImages(!heatMap);
         }
 
-        $scope.playChristmas = function(){
-            setPlaying(true, 'christmas');
+        $scope.requestMore = function(){
+            console.log('requestMore');
+            Core.start();
+            Core.uselessRequest = 0;
+            $scope.noMoreRealtimePhotos = false;
         }
 
-        $scope.clearAllImages = function(){
-            Core.clearAllImages();
+        //FIXME:
+        $timeout(checkTimout, 3*1000);
+
+        function checkTimout(){
+            if(Core.uselessRequest > 6){
+                $scope.noMoreRealtimePhotos = true;
+                Core.stop();
+                //TODO : no any real-time photos, so come later or choose other theme:
+                //Core.stop();
+                //$location.url('/');
+                //Core.uselessRequest = 0;
+            }
+
+            $timeout(checkTimout, 3*1000);
         }
     }]);
 });

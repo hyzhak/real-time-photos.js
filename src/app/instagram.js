@@ -6,6 +6,24 @@ define([
     var timeLastFail = 0;
     var failInterval = 1*60*1000; //if fail, wait for 1 minute
 
+    var instagramRequestCount = 0;
+
+    var timeStart = Date.now();
+
+    var requestPerSecond = 0;
+
+    setInterval(function(){
+        var timePass = Date.now() - timeStart;
+        var newRequestPerSecond = instagramRequestCount / timePass;
+        if(requestPerSecond == newRequestPerSecond){
+            return;
+        }
+        requestPerSecond = newRequestPerSecond;
+        var requestPerHour = 60*60*requestPerSecond;
+        console.log('requestPerHour', requestPerHour);
+        _gaq.push(['_trackEvent', 'instagram', 'requestPerHour', {}, requestPerHour]);
+    }, 10*1000);
+
     //@private
     function requestFromInstagram(params, callback, errorHandler) {
         console.log('requestFromInstagram', params);
@@ -20,7 +38,17 @@ define([
 
         var url = 'https://api.instagram.com/v1/' + params + 'client_id=' + Config.INSTAGRAM_CLIENT_ID;
         //var url = 'http://google.com';
-        _gaq.push(['_trackEvent', 'instagram', 'request', params]);
+
+        function incRequestCount() {
+            instagramRequestCount++;
+            _gaq.push(['_trackEvent', 'instagram', 'request', params, instagramRequestCount]);
+            var requestPerSecond = timeStart
+        }
+
+        incRequestCount();
+
+        console.log('instagramRequestCount', instagramRequestCount);
+
         $.ajax(url, {
             crossDomain:true,
             dataType:'jsonp',
@@ -31,14 +59,13 @@ define([
             console.log('done', response);
             _gaq.push(['_trackEvent', 'instagram', 'request-done', params]);
             switch (response.meta.code) {
-                case 200:
-                    console.log('error', response.meta);
+                case 420:
+                    console.log('error', response);
+                    _gaq.push(['_trackEvent', 'instagram', 'request-error', params]);
+                    timeLastFail = Date.now();
                     if(errorHandler){
                         errorHandler(response.meta);
                     }
-                    return;
-                case 420:
-                    console.log('error', response);
                     return;
                 default:
                     var dataArray = response.data;
