@@ -11,20 +11,21 @@ define([
             params += '?';
         }
         var url = 'https://api.instagram.com/v1/' + params + 'client_id=' + Config.INSTAGRAM_CLIENT_ID;
+        return;
         $.ajax(url, {
             crossDomain:true,
             dataType:'jsonp'
         }).done(function (response) {
-                if (response.meta.code != 200) {
-                    console.log('error', response.meta);
-                    if(errorHandler){
-                        errorHandler(response.meta);
-                    }
-                    return;
+            if (response.meta.code != 200) {
+                console.log('error', response.meta);
+                if(errorHandler){
+                    errorHandler(response.meta);
                 }
-                var dataArray = response.data;
-                callback(dataArray);
-            });
+                return;
+            }
+            var dataArray = response.data;
+            callback(dataArray);
+        });
     }
 
     return {
