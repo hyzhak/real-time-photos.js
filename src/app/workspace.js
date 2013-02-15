@@ -1,7 +1,8 @@
 define([
-],function () {
+    'config'
+],function (Config) {
     return {
-        defaultUrl: '#/tag/meteor+russianmeteor+челябинск+метеорит+armageddon+meteorite+asteroid+chelyabinsk+meteorit',
+        defaultUrl: Config.DEFAULT_URL,
         //defaultUrl: '#/tag/love+valentin+kiss',
         tagName: 'Love',
         tags: []
