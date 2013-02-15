@@ -139,6 +139,11 @@ html, body {width: 100%; height: 100%;}
 .social-links-element{
     float: left;
 }
+
+.social-links-gh{
+
+}
+
 .social-links-fb{
     margin-right: 62px;
 }
