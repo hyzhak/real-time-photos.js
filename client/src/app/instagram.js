@@ -6,6 +6,8 @@ define([
     var timeLastFail = 0;
     var failInterval = 1*60*1000; //if fail, wait for 1 minute
 
+    var instagramRequestCount = 0;
+
     //@private
     function requestFromInstagram(params, callback, errorHandler) {
         console.log('requestFromInstagram', params);
@@ -20,7 +22,13 @@ define([
 
         var url = 'https://api.instagram.com/v1/' + params + 'client_id=' + Config.INSTAGRAM_CLIENT_ID;
         //var url = 'http://google.com';
-        _gaq.push(['_trackEvent', 'instagram', 'request', params]);
+
+        instagramRequestCount++;
+
+        _gaq.push(['_trackEvent', 'instagram', 'request', params, instagramRequestCount]);
+
+        console.log('instagramRequestCount', instagramRequestCount);
+
         $.ajax(url, {
             crossDomain:true,
             dataType:'jsonp',

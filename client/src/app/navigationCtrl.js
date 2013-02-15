@@ -5,7 +5,7 @@ define([
     'app/startController',
     'app/workspace'
 ],function (appModule, Core, AboutController, StartContoller, Workspace) {
-    appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', '$location', function ($scope, $rootScope, $route, $location)  {
+    appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', '$location', '$timeout', function ($scope, $rootScope, $route, $location, $timeout)  {
 
         //event had removed after 1.0.0
         //$rootScope.$on('$beforeRouteChange', function(scope, newRoute){
@@ -176,5 +176,19 @@ define([
         $scope.clearAllImages = function(){
             Core.clearAllImages();
         }
+
+        //FIXME:
+        $timeout(checkTimout, 3*1000);
+
+        function checkTimout(){
+            if(Core.uselessRequest > 3){
+                //got useless request - just show pause popup
+                window.location = window.location.origin + window.location.pathname;
+                console.log('Core.uselessRequest window.location', window.location);
+            }
+            $timeout(checkTimout, 3*1000);
+        }
+
+
     }]);
 });
