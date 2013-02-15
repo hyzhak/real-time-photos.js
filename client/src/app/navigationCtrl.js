@@ -3,8 +3,9 @@ define([
     'app/core',
     'app/aboutController',
     'app/startController',
-    'app/workspace'
-],function (appModule, Core, AboutController, StartContoller, Workspace) {
+    'app/workspace',
+    'config'
+],function (appModule, Core, AboutController, StartController, Workspace, Config) {
     appModule.controller('NavigationCtrl', ['$scope', '$rootScope', '$route', '$location', '$timeout', function ($scope, $rootScope, $route, $location, $timeout)  {
 
         //event had removed after 1.0.0
@@ -100,11 +101,16 @@ define([
             }
         }
 
-        $scope.tagsText = '#love #valentin #kiss';
+        $scope.tagsText = Config.DEFAULT_TAGS;
 
-        $scope.requestCustomTag = function(){
+        $scope.requestCustomTag = function(tags){
+            //FIXME: Strange, but tagsText doesn't change by view
+            $scope.tagsText = tags;
             _gaq.push(['_trackPageview', '/#/requestCustomTag/' + $scope.tagsText]);
             var tags = parseTagsFromText($scope.tagsText);
+            if(tags.length <= 0){
+                tags = $scope.tagsText.split(' ');
+            }
             //window.location = window.location.origin + window.location.pathname + '#/tag/' + tags.join('+');
             window.location = '#/tag/' + tags.join('+');
         }
