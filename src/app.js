@@ -6,6 +6,7 @@ requirejs.config({
         app : './app',
 
         //CDN
+        //'jquery' : '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery',
         'jquery' : '//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min',
 
         //CDN
