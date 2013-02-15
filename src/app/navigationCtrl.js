@@ -54,6 +54,14 @@ define([
                 return;
             }
             $rootScope.templates.modalWindowUrl = modalWindowUrl;
+
+            var modalWindow = $('#modal-window');
+            if(modalWindow.length <= 0){
+                setTimeout(function(){
+                    showModalWindow(modalWindowUrl);
+                }, 100);
+                return;
+            }
             $('#modal-window').modal('show').on('hidden', function(){
                 $rootScope.templates.modalWindowUrl = null;
                 if(Workspace.defaultUrl){
