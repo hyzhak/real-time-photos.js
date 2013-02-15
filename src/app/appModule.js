@@ -3,8 +3,6 @@ define([
 ],function (angular) {
     var module = angular.module('app', []);
 
-
-
     module.directive('smartImage', function($timeout){
             var directiveDefinitionObject = {
                 templateUrl: 'partials/smartImage.html',
