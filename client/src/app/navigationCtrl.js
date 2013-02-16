@@ -13,7 +13,7 @@ define([
         $rootScope.$on('$routeChangeStart', function(scope, newRoute){
             if (!newRoute || !newRoute.$route) return;
 
-            _gaq.push(['_trackPageview', window.location]);
+            _gaq.push(['_trackPageview', window.location.toString()]);
             //Load any required resources here
             //Set the state bound do the ng-include src attribute
 
